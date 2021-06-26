@@ -1,0 +1,38 @@
+INSERT INTO account(userId,userPw,created) VALUES(
+    'alalk',
+    '2209',
+    NOW()
+);
+
+INSERT INTO nickname(nickname,created,account_id) VALUES(
+    'oldbbie',
+    NOW(),
+    1
+);
+
+INSERT INTO book(title,created,nickname_id) VALUES(
+    '아르세우스 연대기',
+    NOW(),
+    1
+);
+
+INSERT INTO episode(title,description,created,book_id) VALUES(
+    '아르세우스 연대기 1화',
+    '평범한 마을에...',
+    NOW(),
+    1
+);
+
+INSERT INTO episode(title,description,created,book_id) VALUES(
+    '아르세우스 연대기 2화',
+    '아르세우스는 ...',
+    NOW(),
+    1
+);
+
+INSERT INTO episode(title,description,created,book_id) VALUES(
+    '아르세우스 연대기 3화',
+    '친구야!',
+    NOW(),
+    1
+);

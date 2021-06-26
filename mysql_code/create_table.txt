@@ -1,0 +1,51 @@
+set names utf8;
+
+show tables;
+
+drop table account;
+drop table author;
+drop table book;
+drop table episode;
+
+CREATE TABLE account (
+    id INT NOT NULL AUTO_INCREMENT,
+    userId VARCHAR(20) NOT NULL,
+    userPw text NULL,
+    created datetime NULL,
+    img VARCHAR(20) NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE nickname (
+    id INT NOT NULL AUTO_INCREMENT,
+    nickname VARCHAR(20) NOT NULL,
+    pr text NULL,
+    created datetime NULL,
+    img VARCHAR(20) NULL,
+    account_id INT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(account_id) REFERENCES account (id)
+);
+
+CREATE TABLE book (
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(30) NOT NULL,
+    description text NULL,
+    created datetime NULL,
+    img VARCHAR(20) NULL,
+    nickname_id INT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(nickname_id) REFERENCES nickname (id)
+);
+
+CREATE TABLE episode (
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(30) NOT NULL,
+    description text NULL,
+    created datetime NULL,
+    img VARCHAR(20) NULL,
+    book_id INT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(book_id) REFERENCES book (id)
+);
+
