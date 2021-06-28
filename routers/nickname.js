@@ -52,7 +52,15 @@ router.get('/id/:nicknameId',function(request,response,next){
 
 router.get('/create',function(request,response,next){
 	var head = template.head('');
-	var body = template.body('내일할꺼');
+	var body = template.body(`
+		<form action = "/nickname/create_process" method="post">
+			<p><input type = "hidden" id="account" name="account" value="1"></p>
+			<p><input type = "text" id="nickname" name="nickname" placeholder="닉네임"></p>
+			<p><textarea id="description" name="pr" placeholder="pr"></textarea></p>
+			<p><input type = "submit" value = "작성완료"></p>
+		</from>
+		<p><a href="/nickname/">작성취소</a></p>
+		`);
 	var html = template.html(head,body);
 	response.send(html);
 })
@@ -64,11 +72,14 @@ router.get('/update/:pageId',function(request,response,next){
 	response.send(html);
 })
 
-router.get('/create_process',function(request,response,next){
-	var head = template.head('');
-	var body = template.body('<p>준비중</p>');
-	var html = template.html(head,body);
-	response.send(html);
+router.post('/create_process',function(request,response,next){
+	var post = request.body;
+	var nickname = post.nickname;
+	var pr = post.pr;
+	var account = post.account;
+	db.query(`INSERT INTO nickname	(nickname,pr,created,account_id) VALUE (?,?,NOW(),?)`,[nickname,pr,account],function(err,result){
+		response.redirect( `/nickname/id/${result.insertId}`);
+	})
 })
 
 router.get('/update_process',function(request,response,next){

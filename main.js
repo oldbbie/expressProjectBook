@@ -12,6 +12,8 @@ var app = express();
 
 app.use(bodyParser.urlencoded({ extended:false }));
 
+app.use('/css',express.static('public/css'));
+
 //app.get('*',function(request,response,next){
 //	response.send('start');
 //})

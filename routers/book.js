@@ -59,7 +59,7 @@ router.get('/create',function(request,response,next){
 			<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
 			<p><input type = "submit" value = "작성완료"></p>
 		</from>
-		<p><a href="/episode/">작성취소</a></p>
+		<p><a href="/book/">작성취소</a></p>
 		`);
 	var html = template.html(head,body);
 	response.send(html);
