@@ -8,11 +8,13 @@ router.get('/',function(request,response,next){
 	db.query(`SELECT * FROM episode`, function (err, episodes) {
 	if(err){throw err}
 		var list = template.listEpisode(episodes);
-		var head = template.head('');
+		var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
 		var body = template.body(
 			list + 
-			`<p><a href="/episode/create">글쓰기</a></p>
-			<p><a href="/">홈가기</a></p>
+			`<footer>
+				<p><a href="/episode/create">글쓰기</a></p>
+				<p><a href="/">홈가기</a></p>
+			</footer>
 		`);
 		var html = template.html(head,body);
 		response.send(html);

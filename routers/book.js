@@ -8,11 +8,13 @@ router.get('/',function(request,response,next){
 	db.query(`SELECT * FROM book`, function (err, books) {
 	if(err){throw err}
 		var list = template.listBook(books);
-		var head = template.head('');
+		var head = template.head(`<link rel="stylesheet" href="/css/indexBook.css">`);
 		var body = template.body(
 			list + 
-			`<p><a href="/book/create">책쓰기</a></p>
-			<p><a href="/">홈가기</a></p>
+			`<footer>
+				<p><a href="/book/create">책쓰기</a></p>
+				<p><a href="/">홈가기</a></p>
+			</footer>
 		`);
 		var html = template.html(head,body);
 		response.send(html);

@@ -1,0 +1,12 @@
+.wrap {padding: 10px}
+
+main {}
+main ul {}
+main ul li {}
+main ul li a {padding: 10px}
+main ul li a:hover {text-decoration:underline}
+
+footer {display: flex}
+footer p {}
+footer p  a{margin-right: 10px; padding : 10px; background-color: antiquewhite}
+footer p  a:hover {background-color: brown; color: aliceblue}
