@@ -22,7 +22,7 @@ router.get('/',function(request,response,next){
 })
 
 router.get('/index/:indexPage',function(request,response,next){
-	var head = template.head('');
+	var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
 	var body = template.body('<p>나중에</p>');
 	var html = template.html(head,body);
 	response.send(html);
@@ -52,31 +52,39 @@ router.get('/id/:episodeId',function(request,response,next){
 	})
 })
 
-router.get('/create/:bookId',function(request,response,next){
-	var head = template.head('');
+router.get('/create',function(request,response,next){
+	var head = template.head(`<link rel="stylesheet" href="/css/formEpisode.css">`);
 	var body = template.body(`
-		<form action = "/episode/create_process" method="post">
-			<p><input type = "hidden" id="book" name="book" value="${request.params.bookId}"></p>
-			<p><input type = "text" id="title" name="title" placeholder="제목"></p>
-			<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
-			<p><input type = "submit" value = "작성완료"></p>
-		</from>
-		<p><a href="/episode/">작성취소</a></p>
+		<main>
+			<form action = "/episode/create_process" method="post">
+				<p><input type = "hidden" id="book" name="book" value="1"></p>
+				<p><input type = "text" id="title" name="title" placeholder="제목"></p>
+				<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
+				<p>
+					<input type = "submit" value = "작성완료">
+					<a href="/episode/">작성취소</a>
+				</p>
+			</from>
+		</main>
 		`);
 	var html = template.html(head,body);
 	response.send(html);
 })
 
-router.get('/create',function(request,response,next){
-	var head = template.head('');
+router.get('/create/:bookId',function(request,response,next){
+	var head = template.head(`<link rel="stylesheet" href="/css/formEpisode.css">`);
 	var body = template.body(`
-		<form action = "/episode/create_process" method="post">
-			<p><input type = "hidden" id="book" name="book" value="1"></p>
-			<p><input type = "text" id="title" name="title" placeholder="제목"></p>
-			<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
-			<p><input type = "submit" value = "작성완료"></p>
-		</from>
-		<p><a href="/episode/">작성취소</a></p>
+		<main>
+			<form action = "/episode/create_process" method="post">
+				<p><input type = "hidden" id="book" name="book" value="${request.params.bookId}"></p>
+				<p><input type = "text" id="title" name="title" placeholder="제목"></p>
+				<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
+				<p>
+					<input type = "submit" value = "작성완료">
+					<a href="/episode/">작성취소</a>
+				</p>
+			</from>
+		</main>
 		`);
 	var html = template.html(head,body);
 	response.send(html);
@@ -84,16 +92,20 @@ router.get('/create',function(request,response,next){
 
 router.get('/update/:episodeId',function(request,response,next){
 	db.query(`SELECT * FROM episode WHERE id=?`,[request.params.episodeId], function (err, episode) {
-		var head = template.head('');
+		var head = template.head(`<link rel="stylesheet" href="/css/formEpisode.css">`);
 		var body = template.body(`
-			<form action = "/episode/update_process" method="post">
-				<p><input type = "hidden" id="book" name="book" value="1"></p>
-				<p><input type = "hidden" id="id" name="id" value="${episode[0].id}"></p>
-				<p><input type = "text" id="title" name="title" value="${episode[0].title}" placeholder="제목"></p>
-				<p><textarea id="description" name="description" placeholder="내용">${episode[0].description}</textarea></p>
-				<p><input type = "submit" value = "작성완료"></p>
-			</from>
-				<p><a href="/episode/id/${request.params.episodeId}">작성취소</a></p>
+			<main>
+				<form action = "/episode/update_process" method="post">
+					<p><input type = "hidden" id="book" name="book" value="1"></p>
+					<p><input type = "hidden" id="id" name="id" value="${episode[0].id}"></p>
+					<p><input type = "text" id="title" name="title" value="${episode[0].title}" placeholder="제목"></p>
+					<p><textarea id="description" name="description" placeholder="내용">${episode[0].description}</textarea></p>
+					<p>
+						<input type = "submit" value = "작성완료">
+						<a href="/episode/id/${request.params.episodeId}">작성취소</a>
+					</p>
+				</from>
+			</main>
 			`);
 		var html = template.html(head,body);
 		response.send(html);

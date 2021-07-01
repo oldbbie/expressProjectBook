@@ -1,0 +1,10 @@
+.wrap {padding: 1vw 1vh}
+
+main {}
+main form {display: flex; flex-direction: column; align-items: center}
+main form p {display: flex; justify-content: space-between; margin-bottom: 20px; width: 80vw;}
+main form p input[type="hidden"]{}
+main form p input[type="text"]{flex:1; height: 30px; line-height: 30px}
+main form p textarea{flex:1; min-height: 50vh}
+main form p input[type="submit"]{order:2}
+main form p input[type="submit"]+a{order:1}

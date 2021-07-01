@@ -22,7 +22,7 @@ router.get('/',function(request,response,next){
 })
 
 router.get('/index/:indexPage',function(request,response,next){
-	var head = template.head('');
+	var head = template.head(`<link rel="stylesheet" href="/css/indexNickname.css">`);
 	var body = template.body('<p>나중에</p>');
 	var html = template.html(head,body);
 	response.send(html);
@@ -53,22 +53,26 @@ router.get('/id/:nicknameId',function(request,response,next){
 })
 
 router.get('/create',function(request,response,next){
-	var head = template.head('');
+	var head = template.head(`<link rel="stylesheet" href="/css/formNickname.css">`);
 	var body = template.body(`
-		<form action = "/nickname/create_process" method="post">
-			<p><input type = "hidden" id="account" name="account" value="1"></p>
-			<p><input type = "text" id="nickname" name="nickname" placeholder="닉네임"></p>
-			<p><textarea id="description" name="pr" placeholder="pr"></textarea></p>
-			<p><input type = "submit" value = "작성완료"></p>
-		</from>
-		<p><a href="/nickname/">작성취소</a></p>
+		<main>
+			<form action = "/nickname/create_process" method="post">
+				<p><input type = "hidden" id="account" name="account" value="1"></p>
+				<p><input type = "text" id="nickname" name="nickname" placeholder="닉네임"></p>
+				<p><textarea id="description" name="pr" placeholder="pr"></textarea></p>
+				<p>
+					<input type = "submit" value = "작성완료">
+					<a href="/nickname/">작성취소</a>
+				</p>
+			</from>
+		</main>
 		`);
 	var html = template.html(head,body);
 	response.send(html);
 })
 
 router.get('/update/:pageId',function(request,response,next){
-	var head = template.head('');
+	var head = template.head(`<link rel="stylesheet" href="/css/formNickname.css">`);
 	var body = template.body('<p>준비중</p>');
 	var html = template.html(head,body);
 	response.send(html);

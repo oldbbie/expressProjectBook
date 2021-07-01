@@ -22,7 +22,7 @@ router.get('/',function(request,response,next){
 })
 
 router.get('/index/:indexPage',function(request,response,next){
-	var head = template.head('');
+	var head = template.head(`<link rel="stylesheet" href="/css/indexBook.css">`);
 	var body = template.body('<p>나중에</p>');
 	var html = template.html(head,body);
 	response.send(html);
@@ -53,30 +53,38 @@ router.get('/id/:bookId',function(request,response,next){
 })
 
 router.get('/create',function(request,response,next){
-	var head = template.head('');
+	var head = template.head(`<link rel="stylesheet" href="/css/formBook.css">`);
 	var body = template.body(`
-		<form action = "/book/create_process" method="post">
-			<p><input type = "hidden" id="nickname" name="nickname" value="1"></p>
-			<p><input type = "text" id="title" name="title" placeholder="제목"></p>
-			<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
-			<p><input type = "submit" value = "작성완료"></p>
-		</from>
-		<p><a href="/book/">작성취소</a></p>
+		<main>
+			<form action = "/book/create_process" method="post">
+				<p><input type = "hidden" id="nickname" name="nickname" value="1"></p>
+				<p><input type = "text" id="title" name="title" placeholder="제목"></p>
+				<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
+				<p>
+					<input type = "submit" value = "작성완료">
+					<a href="/book/">작성취소</a>
+				</p>
+			</from>
+		</main>
 		`);
 	var html = template.html(head,body);
 	response.send(html);
 })
 
 router.get('/create/:nicknameId',function(request,response,next){
-	var head = template.head('');
+	var head = template.head(`<link rel="stylesheet" href="/css/formBook.css">`);
 	var body = template.body(`
-		<form action = "/book/create_process" method="post">
-			<p><input type = "hidden" id="nickname" name="nickname" value="${request.params.nicknameId}"></p>
-			<p><input type = "text" id="title" name="title" placeholder="제목"></p>
-			<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
-			<p><input type = "submit" value = "작성완료"></p>
-		</from>
-		<p><a href="/episode/">작성취소</a></p>
+		<main>
+			<form action = "/book/create_process" method="post">
+				<p><input type = "hidden" id="nickname" name="nickname" value="${request.params.nicknameId}"></p>
+				<p><input type = "text" id="title" name="title" placeholder="제목"></p>
+				<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
+				<p>
+					<input type = "submit" value = "작성완료">
+					<a href="/episode/">작성취소</a>
+				</p>
+			</from>
+		</main>
 		`);
 	var html = template.html(head,body);
 	response.send(html);
@@ -84,16 +92,20 @@ router.get('/create/:nicknameId',function(request,response,next){
 
 router.get('/update/:bookId',function(request,response,next){
 	db.query(`SELECT * FROM book WHERE id=?`,[request.params.bookId], function (err, book) {
-		var head = template.head('');
+		var head = template.head(`<link rel="stylesheet" href="/css/formBook.css">`);
 		var body = template.body(`
-			<form action = "/book/update_process" method="post">
-				<p><input type = "hidden" id="book" name="book" value="1"></p>
-				<p><input type = "hidden" id="id" name="id" value="${book[0].id}"></p>
-				<p><input type = "text" id="title" name="title" value="${book[0].title}" placeholder="제목"></p>
-				<p><textarea id="description" name="description" placeholder="내용">${book[0].description}</textarea></p>
-				<p><input type = "submit" value = "작성완료"></p>
-			</from>
-				<p><a href="/episode/id/${request.params.bookId}">작성취소</a></p>
+			<main>
+				<form action = "/book/update_process" method="post">
+					<p><input type = "hidden" id="book" name="book" value="1"></p>
+					<p><input type = "hidden" id="id" name="id" value="${book[0].id}"></p>
+					<p><input type = "text" id="title" name="title" value="${book[0].title}" placeholder="제목"></p>
+					<p><textarea id="description" name="description" placeholder="내용">${book[0].description}</textarea></p>
+					<p>
+						<input type = "submit" value = "작성완료">
+						<a href="/episode/id/${request.params.bookId}">작성취소</a>
+					</p>
+				</from>
+			</main>
 			`);
 		var html = template.html(head,body);
 		response.send(html);
