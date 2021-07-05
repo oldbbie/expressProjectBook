@@ -9,9 +9,9 @@ router.get('/',function(request,response,next){
 	if(err){throw err}
 		var list = template.listNickname(nicknames);
 		var head = template.head(`<link rel="stylesheet" href="/css/indexNickname.css">`);
-		var body = template.body(
-			list + 
-			`<footer>
+		var body = template.body(`
+			<main>${list}</main> 
+			<footer>
 				<p><a href="/nickname/create">작가페이지만들기</a></p>
 				<p><a href="/">홈가기</a></p>
 			</footer>
@@ -37,8 +37,8 @@ router.get('/id/:nicknameId',function(request,response,next){
 			var body = template.body(
 				`<p>${nickname[0].nickname}</p>
 				<p>${nickname[0].pr}</p>
-				<p><a href="/book/update/${request.params.nicknameId}">작가 페이지 관리하기</a></p>
-				<form action="/book/delete_process" method="post">
+				<p><a href="/nickname/update/${request.params.nicknameId}">작가 페이지 관리하기</a></p>
+				<form action="/nickname/delete_process" method="post">
 					<input type="hidden" name="id" value="${request.params.nicknameId}">
 					<input type="submit" value="작가 탈퇴하기">
 				</form>
@@ -71,12 +71,27 @@ router.get('/create',function(request,response,next){
 	response.send(html);
 })
 
-router.get('/update/:pageId',function(request,response,next){
-	var head = template.head(`<link rel="stylesheet" href="/css/formNickname.css">`);
-	var body = template.body('<p>준비중</p>');
-	var html = template.html(head,body);
-	response.send(html);
+router.get('/update/:nicknameId',function(request,response,next){
+	db.query(`SELECT * FROM nickname WHERE id=?`,[request.params.nicknameId], function (err, nickname) {
+		var head = template.head(`<link rel="stylesheet" href="/css/formNickname.css">`);
+		var body = template.body(`
+			<main>
+				<form action = "/nickname/update_process" method="post">
+					<p><input type = "hidden" id="id" name="id" value="${nickname[0].id}"></p>
+					<p><input type = "text" id="nickname" name="nickname" value="${nickname[0].nickname}" placeholder="제목"></p>
+					<p><textarea id="pr" name="pr" placeholder="내용">${nickname[0].pr}</textarea></p>
+					<p>
+						<input type = "submit" value = "작성완료">
+						<a href="/nickname/id/${request.params.nicknameId}">작성취소</a>
+					</p>
+				</from>
+			</main>
+			`);
+		var html = template.html(head,body);
+		response.send(html);
+	})
 })
+
 
 router.post('/create_process',function(request,response,next){
 	var post = request.body;
@@ -88,11 +103,21 @@ router.post('/create_process',function(request,response,next){
 	})
 })
 
-router.get('/update_process',function(request,response,next){
-	var head = template.head('');
-	var body = template.body('<p>준비중</p>');
-	var html = template.html(head,body);
-	response.send(html);
+router.post('/update_process',function(request,response,next){
+	var post = request.body;
+	var nickname = post.nickname;
+	var pr = post.pr;
+	var id = post.id;
+	db.query(`
+		UPDATE nickname
+			SET
+				nickname = ?, 
+				pr = ?
+			WHERE
+				id = ?
+		`,[nickname,pr,id],function(err,result){
+		response.redirect( `/nickname/id/${id}`);
+	})
 })
 
 

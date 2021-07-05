@@ -9,9 +9,9 @@ router.get('/',function(request,response,next){
 	if(err){throw err}
 		var list = template.listEpisode(episodes);
 		var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
-		var body = template.body(
-			list + 
-			`<footer>
+		var body = template.body(`
+			<main>${list}</main>
+			<footer>
 				<p><a href="/episode/create">글쓰기</a></p>
 				<p><a href="/">홈가기</a></p>
 			</footer>
@@ -32,20 +32,30 @@ router.get('/id/:episodeId',function(request,response,next){
 	db.query(`SELECT * FROM episode`, function (err, episodes) {
 		db.query(`SELECT * FROM episode WHERE id=?`,[request.params.episodeId], function (err2, episode) {
 		if(err){throw err}
-			var list = template.listEpisode(episode);
-			var head = template.head('');
-			var body = template.body(
-				list + 
-				`<p>${episode[0].description}</p>
-				<p><a href="/episode/update/${request.params.episodeId}">update</a></p>
-				<form action="/episode/delete_process" method="post">
-					<input type="hidden" name="id" value="${request.params.episodeId}">
-					<input type="submit" value="삭제하기">
-				</form>
-				<p><a href="/episode">목록보기</a></p>
-				<p><a href="/book/id/${episode[0].book_id}">책목차보기</a></p>
-				`
-			);
+			var list = template.listEpisode(episodes);
+			var titleEpisode = template.titleEpisode(episode);
+			var head = template.head(`<link rel="stylesheet" href="/css/pageEpisode.css">`);
+			var body = template.body(`
+				<header>
+				</header>
+				<main>
+					${titleEpisode}
+					<p>${episode[0].description}</p>
+				</main>
+				<footer>
+					<div class="update">
+						<p><a href="/episode/update/${request.params.episodeId}">update</a></p>
+						<form action="/episode/delete_process" method="post">
+							<input type="hidden" name="id" value="${request.params.episodeId}">
+							<input type="submit" value="삭제하기">
+						</form>
+					</div>
+					<div class="indexLink">
+						<p><a href="/episode">목록보기</a></p>
+						<p><a href="/book/id/${episode[0].book_id}">책목차보기</a></p>
+					</div>
+				</footer>
+				`);
 			var html = template.html(head,body);
 			response.send(html);
 		})
@@ -96,7 +106,6 @@ router.get('/update/:episodeId',function(request,response,next){
 		var body = template.body(`
 			<main>
 				<form action = "/episode/update_process" method="post">
-					<p><input type = "hidden" id="book" name="book" value="1"></p>
 					<p><input type = "hidden" id="id" name="id" value="${episode[0].id}"></p>
 					<p><input type = "text" id="title" name="title" value="${episode[0].title}" placeholder="제목"></p>
 					<p><textarea id="description" name="description" placeholder="내용">${episode[0].description}</textarea></p>

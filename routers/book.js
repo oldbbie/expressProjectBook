@@ -9,9 +9,9 @@ router.get('/',function(request,response,next){
 	if(err){throw err}
 		var list = template.listBook(books);
 		var head = template.head(`<link rel="stylesheet" href="/css/indexBook.css">`);
-		var body = template.body(
-			list + 
-			`<footer>
+		var body = template.body(`
+			<main>${list}</main>  
+			<footer>
 				<p><a href="/book/create">책쓰기</a></p>
 				<p><a href="/">홈가기</a></p>
 			</footer>
@@ -96,13 +96,12 @@ router.get('/update/:bookId',function(request,response,next){
 		var body = template.body(`
 			<main>
 				<form action = "/book/update_process" method="post">
-					<p><input type = "hidden" id="book" name="book" value="1"></p>
 					<p><input type = "hidden" id="id" name="id" value="${book[0].id}"></p>
 					<p><input type = "text" id="title" name="title" value="${book[0].title}" placeholder="제목"></p>
 					<p><textarea id="description" name="description" placeholder="내용">${book[0].description}</textarea></p>
 					<p>
 						<input type = "submit" value = "작성완료">
-						<a href="/episode/id/${request.params.bookId}">작성취소</a>
+						<a href="/book/id/${request.params.bookId}">작성취소</a>
 					</p>
 				</from>
 			</main>
