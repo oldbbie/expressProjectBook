@@ -121,11 +121,16 @@ router.post('/update_process',function(request,response,next){
 })
 
 
-router.get('/delete_process',function(request,response,next){
-	var head = template.head('');
-	var body = template.body('<p>준비중</p>');
-	var html = template.html(head,body);
-	response.send(html);
+router.post('/delete_process',function(request,response,next){
+	var post = request.body;
+	var id = post.id;
+	db.query(`DELETE e  FROM episode as e JOIN book as b ON e.book_id = b.id WHERE b.nickname_id = ?`,[id],function(err,result){
+		db.query(`DELETE  FROM book WHERE nickname_id = ?`,[id],function(err,result){
+			db.query(`DELETE  FROM nickname WHERE id = ?`,[id],function(err,result){
+				response.redirect( `/nickname/`);
+			})
+		})
+	})
 })
 
 
