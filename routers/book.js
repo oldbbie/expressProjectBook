@@ -33,19 +33,32 @@ router.get('/id/:bookId',function(request,response,next){
 		db.query(`SELECT * FROM episode WHERE book_id=?`,[request.params.bookId], function (err2, episodes) {
 		if(err){throw err}
 			var list = template.listEpisode(episodes);
-			var head = template.head('');
-			var body = template.body(
-				`<p>${book[0].title}</p>
-				<p>${book[0].description}</p>
-				<p><a href="/book/update/${request.params.bookId}">책 수정하기</a></p>
-				<form action="/book/delete_process" method="post">
-					<input type="hidden" name="id" value="${request.params.bookId}">
-					<input type="submit" value="책 삭제하기">
-				</form>
-				<p><a href="/book">다른 책 보기</a></p>`
-				+ list
-				+ `<p><a href="/episode/create/${request.params.bookId}">글쓰기</a></p>`
-			);
+			var head = template.head(`<link rel="stylesheet" href="/css/pageBook.css">`);
+			var body = template.body(`
+				<header>
+				</header>
+				<main>
+					<h2>${book[0].title}</h2>
+					<p>${book[0].description}</p>
+				</main>
+				<footer>
+					<div class="update">
+						<p><a href="/book/update/${request.params.bookId}">책 수정하기</a></p>
+						<form action="/book/delete_process" method="post">
+							<input type="hidden" name="id" value="${request.params.bookId}">
+							<input type="submit" value="책 삭제하기">
+						</form>
+						<p><a href="/episode/create/${request.params.bookId}">글쓰기</a></p>
+					</div>
+					<div class="indexLink">
+						<p><a href="/book">다른 책 보기</a></p>
+						<p><a href="/nickname/id/${book[0].nickname_id}">이 작가가 쓴 책보기</a></p>
+					</div>
+					<div class="episodeList">
+						${list}
+					</div>
+				</footer>
+			`);
 			var html = template.html(head,body);
 			response.send(html);
 		})

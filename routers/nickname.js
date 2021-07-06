@@ -33,19 +33,31 @@ router.get('/id/:nicknameId',function(request,response,next){
 		db.query(`SELECT * FROM book WHERE nickname_id=?`,[request.params.nicknameId], function (err2, books) {
 		if(err){throw err}
 			var list = template.listBook(books);
-			var head = template.head('');
-			var body = template.body(
-				`<p>${nickname[0].nickname}</p>
-				<p>${nickname[0].pr}</p>
-				<p><a href="/nickname/update/${request.params.nicknameId}">작가 페이지 관리하기</a></p>
-				<form action="/nickname/delete_process" method="post">
-					<input type="hidden" name="id" value="${request.params.nicknameId}">
-					<input type="submit" value="작가 탈퇴하기">
-				</form>
-				<p><a href="/nickname">다른 작가 보기</a></p>`
-				+ list
-				+ `<p><a href="/book/create/${request.params.nicknameId}">책쓰기</a></p>`
-			);
+			var head = template.head(`<link rel="stylesheet" href="/css/pageNickname.css">`);
+			var body = template.body(`
+				<header>
+				</header>
+				<main>
+					<h2>${nickname[0].nickname}</h2>
+					<p>${nickname[0].pr}</p>
+				</main>
+				<footer>
+					<div class="update">
+						<p><a href="/nickname/update/${request.params.nicknameId}">작가 페이지 관리하기</a></p>
+						<form action="/nickname/delete_process" method="post">
+							<input type="hidden" name="id" value="${request.params.nicknameId}">
+							<input type="submit" value="작가 탈퇴하기">
+						</form>
+						<p><a href="/book/create/${request.params.nicknameId}">책쓰기</a></p>
+					</div>
+					<div class="indexLink">
+					<p><a href="/nickname">다른 작가 보기</a></p>
+					</div>
+					<div class="bookList">
+						${list}
+					</div>
+				</footer>
+			`);
 			var html = template.html(head,body);
 			response.send(html);
 		})

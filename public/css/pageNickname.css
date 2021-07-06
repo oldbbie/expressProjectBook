@@ -1,0 +1,25 @@
+.wrap {padding: 10px}
+
+haeder {margin-bottom: 20px}
+haeder nav{}
+
+main {margin-bottom: 20px; border: 1px solid #666; border-radius: 5px}
+main h2{margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #aaa; text-indent: 1rem}
+main p{min-height: 20vh; text-indent: 1em}
+
+footer {margin-bottom: 20px}
+footer .update {display: flex}
+footer .update p{}
+footer .update p a{}
+footer .update form{}
+footer .update form input[type='hidden']{}
+footer .update form input[type='submit']{}
+footer .indexLink {display: flex}
+footer .indexLink p {}
+footer .indexLink p a {margin : 10px; width : 200px; height: 50px; background-color: antiquewhite; text-align: center; line-height: 50px}
+footer .indexLink p a:hover {background-color: brown; color: aliceblue}
+footer .bookList {}
+footer .bookList ul{}
+footer .bookList ul li{}
+footer .bookList ul li a{}
+footer .bookList ul li a:hover{text-decoration: underline}
