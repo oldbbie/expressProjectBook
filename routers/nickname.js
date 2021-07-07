@@ -10,6 +10,7 @@ router.get('/',function(request,response,next){
 		var list = template.listNickname(nicknames);
 		var head = template.head(`<link rel="stylesheet" href="/css/indexNickname.css">`);
 		var body = template.body(`
+			${template.header()}
 			<main>${list}</main> 
 			<footer>
 				<p><a href="/nickname/create">작가페이지만들기</a></p>
@@ -35,8 +36,7 @@ router.get('/id/:nicknameId',function(request,response,next){
 			var list = template.listBook(books);
 			var head = template.head(`<link rel="stylesheet" href="/css/pageNickname.css">`);
 			var body = template.body(`
-				<header>
-				</header>
+				${template.header()}
 				<main>
 					<h2>${nickname[0].nickname}</h2>
 					<p>${nickname[0].pr}</p>
@@ -67,6 +67,7 @@ router.get('/id/:nicknameId',function(request,response,next){
 router.get('/create',function(request,response,next){
 	var head = template.head(`<link rel="stylesheet" href="/css/formNickname.css">`);
 	var body = template.body(`
+		${template.header()}
 		<main>
 			<form action = "/nickname/create_process" method="post">
 				<p><input type = "hidden" id="account" name="account" value="1"></p>
@@ -87,6 +88,7 @@ router.get('/update/:nicknameId',function(request,response,next){
 	db.query(`SELECT * FROM nickname WHERE id=?`,[request.params.nicknameId], function (err, nickname) {
 		var head = template.head(`<link rel="stylesheet" href="/css/formNickname.css">`);
 		var body = template.body(`
+			${template.header()}
 			<main>
 				<form action = "/nickname/update_process" method="post">
 					<p><input type = "hidden" id="id" name="id" value="${nickname[0].id}"></p>

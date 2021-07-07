@@ -10,6 +10,7 @@ router.get('/',function(request,response,next){
 		var list = template.listBook(books);
 		var head = template.head(`<link rel="stylesheet" href="/css/indexBook.css">`);
 		var body = template.body(`
+			${template.header()}
 			<main>${list}</main>  
 			<footer>
 				<p><a href="/book/create">책쓰기</a></p>
@@ -35,8 +36,7 @@ router.get('/id/:bookId',function(request,response,next){
 			var list = template.listEpisode(episodes);
 			var head = template.head(`<link rel="stylesheet" href="/css/pageBook.css">`);
 			var body = template.body(`
-				<header>
-				</header>
+				${template.header()}
 				<main>
 					<h2>${book[0].title}</h2>
 					<p>${book[0].description}</p>
@@ -68,6 +68,7 @@ router.get('/id/:bookId',function(request,response,next){
 router.get('/create',function(request,response,next){
 	var head = template.head(`<link rel="stylesheet" href="/css/formBook.css">`);
 	var body = template.body(`
+		${template.header()}
 		<main>
 			<form action = "/book/create_process" method="post">
 				<p><input type = "hidden" id="nickname" name="nickname" value="1"></p>
@@ -87,6 +88,7 @@ router.get('/create',function(request,response,next){
 router.get('/create/:nicknameId',function(request,response,next){
 	var head = template.head(`<link rel="stylesheet" href="/css/formBook.css">`);
 	var body = template.body(`
+		${template.header()}
 		<main>
 			<form action = "/book/create_process" method="post">
 				<p><input type = "hidden" id="nickname" name="nickname" value="${request.params.nicknameId}"></p>
@@ -107,6 +109,7 @@ router.get('/update/:bookId',function(request,response,next){
 	db.query(`SELECT * FROM book WHERE id=?`,[request.params.bookId], function (err, book) {
 		var head = template.head(`<link rel="stylesheet" href="/css/formBook.css">`);
 		var body = template.body(`
+			${template.header()}
 			<main>
 				<form action = "/book/update_process" method="post">
 					<p><input type = "hidden" id="id" name="id" value="${book[0].id}"></p>
