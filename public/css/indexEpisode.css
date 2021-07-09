@@ -1,10 +1,18 @@
 .wrap {padding: 10px}
 
 main {}
-main ul {}
-main ul li {}
-main ul li a {padding: 10px}
-main ul li a:hover {text-decoration:underline}
+main>div{}
+main>div ul {}
+main>div ul li {}
+main>div ul li a {padding: 10px}
+main>div ul li a:hover {text-decoration:underline}
+main>nav {}
+main>nav{}
+main>nav ol {display: flex}
+main>nav ol li {}
+main>nav ol li a {padding: 10px; color:cornflowerblue}
+main>nav ol li a.checked {color:#333}
+main>nav ol li a:hover {text-decoration:underline}
 
 footer {display: flex}
 footer p {}

@@ -5,38 +5,66 @@ var template = require('../lib/template');
 var db = require('../lib/db.js');
 
 router.get('/',function(request,response,next){
-	db.query(`SELECT * FROM episode LIMIT 20`, function (err, episodes) {
-	if(err){throw err}
-		var list = template.listEpisode(episodes);
-		var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
-		var body = template.body(`
-			${template.header()}
-			<main>${list}</main>
-			<footer>
-				<p><a href="/episode/create">글쓰기</a></p>
-				<p><a href="/">홈가기</a></p>
-			</footer>
-		`);
-		var html = template.html(head,body);
-		response.send(html);
+	var pageEpisodeCounting = 3;
+	var showPageRange = 2;
+	var nowPage = 1;
+	db.query(`SELECT * FROM episode ORDER BY id DESC LIMIT ?`, [pageEpisodeCounting] ,function (err, episodes) {
+		db.query(`SELECT COUNT(*) as coun FROM episode`, function (err, totalEpisodeCounting) {
+		if(err){throw err}
+			var list = template.listEpisode(episodes);
+			var pageNum = Math.ceil(totalEpisodeCounting[0].coun/pageEpisodeCounting);
+			var indexLink = template.pageLink(pageNum,showPageRange,nowPage);
+			var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
+			var body = template.body(`
+				${template.header()}
+				<main>
+					<div>
+						${list}
+					</div>
+					<nav>
+						${indexLink}
+					</nav>
+				</main>
+				<footer>
+					<p><a href="/episode/create">글쓰기</a></p>
+					<p><a href="/">홈가기</a></p>
+				</footer>
+			`);
+			var html = template.html(head,body);
+			response.send(html);
+		})
 	})
 })
 
 router.get('/index/:indexPage',function(request,response,next){
-	db.query(`SELECT * FROM episode LIMIT ?,20 `,[Number(request.params.indexPage)], function (err, episodes) {
-	if(err){throw err}
-		var list = template.listEpisode(episodes);
-		var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
-		var body = template.body(`
-			${template.header()}
-			<main>${list}</main>
-			<footer>
-				<p><a href="/episode/create">글쓰기</a></p>
-				<p><a href="/">홈가기</a></p>
-			</footer>
-		`);
-		var html = template.html(head,body);
-		response.send(html);
+	var pageEpisodeCounting = 3;
+	var showPageRange = 2;
+	var nowPage = Number(request.params.indexPage);
+	db.query(`SELECT * FROM episode ORDER BY id DESC LIMIT ?,? `,[nowPage,pageEpisodeCounting], function (err, episodes) {
+		db.query(`SELECT COUNT(*) as coun FROM episode`, function (err, totalEpisodeCounting) {
+		if(err){throw err}
+			var list = template.listEpisode(episodes);
+			var pageNum = Math.ceil(totalEpisodeCounting[0].coun/pageEpisodeCounting);
+			var indexLink = template.pageLink(pageNum,showPageRange,nowPage);
+			var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
+			var body = template.body(`
+				${template.header()}
+				<main>
+					<div>
+						${list}
+					</div>
+					<nav>
+						${indexLink}
+					</nav>
+				</main>
+				<footer>
+					<p><a href="/episode/create">글쓰기</a></p>
+					<p><a href="/">홈가기</a></p>
+				</footer>
+			`);
+			var html = template.html(head,body);
+			response.send(html);
+		})
 	})
 })
 
