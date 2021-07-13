@@ -1,6 +1,12 @@
-.wrap {}
+.wrap {margin: 0px 20px}
 
-header {display: flex}
-header p {}
-header p a {margin : 10px; width : 200px; height: 50px; background-color: antiquewhite; text-align: center; line-height: 50px}
-header p a:hover {background-color: brown; color:aliceblue}
+header {display: flex; align-items: center; justify-content: space-between}
+header .home {}
+header .home h1{}
+header .home h1>a{}
+header nav {display: flex}
+header nav p {}
+header nav p>a {margin : 10px; width : 200px; height: 50px; background-color: antiquewhite; text-align: center; line-height: 50px}
+header nav p>a:hover {background-color: brown; color:aliceblue}
+header .account {}
+header .account>a{}

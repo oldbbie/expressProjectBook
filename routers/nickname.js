@@ -5,28 +5,67 @@ var template = require('../lib/template');
 var db = require('../lib/db.js');
 
 router.get('/',function(request,response,next){
-	db.query(`SELECT * FROM nickname`, function (err, nicknames) {
-	if(err){throw err}
-		var list = template.listNickname(nicknames);
-		var head = template.head(`<link rel="stylesheet" href="/css/indexNickname.css">`);
-		var body = template.body(`
-			${template.header()}
-			<main>${list}</main> 
-			<footer>
-				<p><a href="/nickname/create">작가페이지만들기</a></p>
-				<p><a href="/">홈가기</a></p>
-			</footer>
-		`);
-		var html = template.html(head,body);
-		response.send(html);
+	var pageCounting = 3;
+	var showPageRange = 2;
+	var nowPage = 1;
+	db.query(`SELECT * FROM nickname ORDER BY id DESC LIMIT ?`, [pageCounting], function (err, nicknames) {
+		db.query(`SELECT COUNT(*) as coun FROM book`, function (err, totalCounting) {
+		if(err){throw err}
+			var list = template.listNickname(nicknames);
+			var pageNum = Math.ceil(totalCounting[0].coun/pageCounting);
+			var indexLink = template.pageLink(pageNum,showPageRange,nowPage,'/nickname/index');
+			var head = template.head(`<link rel="stylesheet" href="/css/indexNickname.css">`);
+			var body = template.body(`
+				${template.header()}
+				<main>
+					<div class="list">
+						${list}
+					</div>
+					<nav>
+						${indexLink}
+					</nav>
+				</main> 
+				<footer>
+					<p><a href="/nickname/create">작가페이지만들기</a></p>
+					<p><a href="/">홈가기</a></p>
+				</footer>
+			`);
+			var html = template.html(head,body);
+			response.send(html);
+		})
 	})
 })
 
 router.get('/index/:indexPage',function(request,response,next){
-	var head = template.head(`<link rel="stylesheet" href="/css/indexNickname.css">`);
-	var body = template.body('<p>나중에</p>');
-	var html = template.html(head,body);
-	response.send(html);
+	var pageCounting = 3;
+	var showPageRange = 2;
+	var nowPage = Number(request.params.indexPage);
+	db.query(`SELECT * FROM nickname ORDER BY id DESC LIMIT ?,? `,[(nowPage-1)*pageCounting,pageCounting], function (err, nicknames) {
+		db.query(`SELECT COUNT(*) as coun FROM book`, function (err, totalCounting) {
+		if(err){throw err}
+			var list = template.listNickname(nicknames);
+			var pageNum = Math.ceil(totalCounting[0].coun/pageCounting);
+			var indexLink = template.pageLink(pageNum,showPageRange,nowPage,'/nickname/index');
+			var head = template.head(`<link rel="stylesheet" href="/css/indexNickname.css">`);
+			var body = template.body(`
+				${template.header()}
+				<main>
+					<div class="list">
+						${list}
+					</div>
+					<nav>
+						${indexLink}
+					</nav>
+				</main> 
+				<footer>
+					<p><a href="/nickname/create">작가페이지만들기</a></p>
+					<p><a href="/">홈가기</a></p>
+				</footer>
+			`);
+			var html = template.html(head,body);
+			response.send(html);
+		})
+	})
 })
 
 router.get('/id/:nicknameId',function(request,response,next){

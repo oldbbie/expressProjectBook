@@ -1,20 +1,20 @@
 .wrap {padding: 10px}
 
-main {}
+main {margin-bottom: 10px; border : 1px solid #333; border-radius : 5px}
 main>div{}
 main>div ul {}
-main>div ul li {}
-main>div ul li a {padding: 10px}
-main>div ul li a:hover {text-decoration:underline}
+main>div ul li {border-bottom : 1px solid #ccc}
+main>div ul li a {padding : 10px}
+main>div ul li a:hover {text-decoration : underline}
 main>nav {}
 main>nav{}
-main>nav ol {display: flex}
+main>nav ol {display : flex}
 main>nav ol li {}
-main>nav ol li a {padding: 10px; color:cornflowerblue}
-main>nav ol li a.checked {color:#333}
-main>nav ol li a:hover {text-decoration:underline}
+main>nav ol li a {padding: 10px; color : cornflowerblue}
+main>nav ol li a.checked {color : #333}
+main>nav ol li a:hover {text-decoration : underline}
 
 footer {display: flex}
 footer p {}
-footer p  a{margin-right: 10px; padding : 10px; background-color: antiquewhite}
-footer p  a:hover {background-color: brown; color: aliceblue}
+footer p  a{margin-right : 10px; padding : 10px; background-color : antiquewhite}
+footer p  a:hover {background-color : brown; color : aliceblue}

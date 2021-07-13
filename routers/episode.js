@@ -5,20 +5,20 @@ var template = require('../lib/template');
 var db = require('../lib/db.js');
 
 router.get('/',function(request,response,next){
-	var pageEpisodeCounting = 3;
+	var pageCounting = 3;
 	var showPageRange = 2;
 	var nowPage = 1;
-	db.query(`SELECT * FROM episode ORDER BY id DESC LIMIT ?`, [pageEpisodeCounting] ,function (err, episodes) {
-		db.query(`SELECT COUNT(*) as coun FROM episode`, function (err, totalEpisodeCounting) {
+	db.query(`SELECT * FROM episode ORDER BY id DESC LIMIT ?`, [pageCounting] ,function (err, episodes) {
+		db.query(`SELECT COUNT(*) as coun FROM episode`, function (err, totalCounting) {
 		if(err){throw err}
 			var list = template.listEpisode(episodes);
-			var pageNum = Math.ceil(totalEpisodeCounting[0].coun/pageEpisodeCounting);
-			var indexLink = template.pageLink(pageNum,showPageRange,nowPage);
+			var pageNum = Math.ceil(totalCounting[0].coun/pageCounting);
+			var indexLink = template.pageLink(pageNum,showPageRange,nowPage,'/episode/index');
 			var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					<div>
+					<div class="list">
 						${list}
 					</div>
 					<nav>
@@ -37,20 +37,20 @@ router.get('/',function(request,response,next){
 })
 
 router.get('/index/:indexPage',function(request,response,next){
-	var pageEpisodeCounting = 3;
+	var pageCounting = 3;
 	var showPageRange = 2;
 	var nowPage = Number(request.params.indexPage);
-	db.query(`SELECT * FROM episode ORDER BY id DESC LIMIT ?,? `,[nowPage,pageEpisodeCounting], function (err, episodes) {
-		db.query(`SELECT COUNT(*) as coun FROM episode`, function (err, totalEpisodeCounting) {
+	db.query(`SELECT * FROM episode ORDER BY id DESC LIMIT ?,? `,[(nowPage-1)*pageCounting,pageCounting], function (err, episodes) {
+		db.query(`SELECT COUNT(*) as coun FROM episode`, function (err, totalCounting) {
 		if(err){throw err}
 			var list = template.listEpisode(episodes);
-			var pageNum = Math.ceil(totalEpisodeCounting[0].coun/pageEpisodeCounting);
-			var indexLink = template.pageLink(pageNum,showPageRange,nowPage);
+			var pageNum = Math.ceil(totalCounting[0].coun/pageCounting);
+			var indexLink = template.pageLink(pageNum,showPageRange,nowPage,'/episode/index');
 			var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					<div>
+					<div class="list">
 						${list}
 					</div>
 					<nav>
