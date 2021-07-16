@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var template = require('../lib/template');
+var db = require('../lib/db.js');
 
 router.get('/',function(request,response,next){
 	var head = template.head('');
@@ -51,7 +52,7 @@ router.get('/join',function(request,response,next){
 					<input type="password" id="user_pw_i" name="user_pw_i">
 				</div>
 				<div>
-					<input type="submit" value="로그인">
+					<input type="submit" value="회원가입">
 				</div>
 			</form>
 		</main>
@@ -92,10 +93,13 @@ router.post('/login_process',function(request,response,next){
 })
 
 router.post('/join_process',function(request,response,next){
-	var head = template.head('');
-	var body = template.body('<p>준비중</p>');
-	var html = template.html(head,body);
-	response.send(html);
+	var post = request.body;
+	var title = post.title;
+	var user_id = post.user_id;
+	var user_pw = post.user_pw;
+	db.query(`INSERT INTO account (userId, userPw,created) VALUE (?,?,NOW())`,[user_id,user_pw],function(err,result){
+		response.redirect( `/account/`);
+	})
 })
 
 router.post('/update_process',function(request,response,next){
