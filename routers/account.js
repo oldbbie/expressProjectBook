@@ -5,27 +5,23 @@ var template = require('../lib/template');
 var db = require('../lib/db.js');
 
 router.get('/',function(request,response,next){
-	var head = template.head('');
+	var head = template.head(`<link rel="stylesheet" href="/css/login.css">`);
 	var body = template.body(`
-		${template.header()}
 		<main>
 			<form action="/account/login_process" method="post">
-				<div>
-					<span>아이디 : </span>
-					<input type="text" name="user_id" placehoder="아이디">
+				<h2><a href="/"> 소설이트 로그인</a></h2>
+				<div class="input">
+					<p><input type="text" name="user_id" placehoder="아이디" placeholder="아이디"></p>
+					<p><input type="password" name="user_pw" placeholder="비밀번호"></p>
 				</div>
-				<div>
-					<span>비밀번호 : </span>
-					<input type="password" name="user_pw">
-				</div>
-				<div>
-					<input type="submit" value="로그인">
+				<div class="button">
+					<a href="/account/join">회원가입</a>
+					<a href="/account/search">아이디/비밀번호찾기</a>
+                    <button type="submit">로그인</button>
 				</div>
 			</form>
 		</main>
 		<footer>
-			<a href="/account/join">회원가입</a>
-			<a href="/account/search">아이디/비밀번호찾기</a>
 		</footer>
 	`);
 	var html = template.html(head,body);
@@ -33,32 +29,25 @@ router.get('/',function(request,response,next){
 })
 
 router.get('/join',function(request,response,next){
-	var head = template.head('');
+	var head = template.head(`<link rel="stylesheet" href="/css/join.css">`);
 	var body = template.body(`
-		${template.header()}
 		<main>
 			<form action="/account/join_process" method="post">
-				<div>
-					<span>아이디 : </span>
-					<input type="text" name="user_id" placehoder="아이디">
+			<h2><a href="/">테스트 사이트 : 임시 회원가입 페이지</a></h2>
+				<div class="id">
+					<input type="text" name="user_id" placehoder="아이디" placeholder="아이디">
 					<button type="button">중복확인</button>
 				</div>
-				<div>
-					<span>비밀번호 : </span>
-					<input type="password" id="user_pw" name="user_pw">
+				<div class="pw">
+					<input type="password" id="user_pw" name="user_pw" placeholder="비밀번호">
+					<input type="password" id="user_pw_i" name="user_pw_i" placeholder="확인">
 				</div>
-				<div>
-					<span>비밀번호확인 : </span>
-					<input type="password" id="user_pw_i" name="user_pw_i">
-				</div>
-				<div>
+				<div class="button">
+					<a href="/account/">취소</a>
 					<input type="submit" value="회원가입">
 				</div>
 			</form>
 		</main>
-		<footer>
-			<a href="/account/">취소</a>
-		</footer>
 	`);
 	var html = template.html(head,body);
 	response.send(html);

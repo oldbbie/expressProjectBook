@@ -1,6 +1,4 @@
-.wrap {padding: 1vw 1vh}
-
-main {}
+main {padding: 1vw 1vh}
 main form {display: flex; flex-direction: column; align-items: center}
 main form p {display: flex; justify-content: space-between; margin-bottom: 20px; width: 80vw}
 main form p input[type="hidden"]{}

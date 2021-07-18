@@ -14,21 +14,25 @@ router.get('/',function(request,response,next){
 			var list = template.listEpisode(episodes);
 			var pageNum = Math.ceil(totalCounting[0].coun/pageCounting);
 			var indexLink = template.pageLink(pageNum,showPageRange,nowPage,'/episode/index');
-			var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
+			var head = template.head(`
+				<link rel="stylesheet" href="/css/header.css">
+				<link rel="stylesheet" href="/css/indexEpisode.css">
+			`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					<div class="list">
-						${list}
-					</div>
 					<nav>
-						${indexLink}
+						<div class="list">
+							${list}
+						</div>
+						<div class="page">
+							${indexLink}
+						</div>
 					</nav>
-				</main>
-				<footer>
-					<p><a href="/episode/create">글쓰기</a></p>
-					<p><a href="/">홈가기</a></p>
-				</footer>
+					<div class="create">
+						<p><a href="/episode/create">글쓰기</a></p>
+					</div>
+				<main>
 			`);
 			var html = template.html(head,body);
 			response.send(html);
@@ -46,21 +50,25 @@ router.get('/index/:indexPage',function(request,response,next){
 			var list = template.listEpisode(episodes);
 			var pageNum = Math.ceil(totalCounting[0].coun/pageCounting);
 			var indexLink = template.pageLink(pageNum,showPageRange,nowPage,'/episode/index');
-			var head = template.head(`<link rel="stylesheet" href="/css/indexEpisode.css">`);
+			var head = template.head(`
+				<link rel="stylesheet" href="/css/header.css">
+				<link rel="stylesheet" href="/css/indexEpisode.css">
+			`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					<div class="list">
-						${list}
-					</div>
 					<nav>
-						${indexLink}
+						<div class="list">
+							${list}
+						</div>
+						<div class="page">
+							${indexLink}
+						</div>
 					</nav>
-				</main>
-				<footer>
-					<p><a href="/episode/create">글쓰기</a></p>
-					<p><a href="/">홈가기</a></p>
-				</footer>
+					<div class="create">
+						<p><a href="/episode/create">글쓰기</a></p>
+					</div>
+				<main>
 			`);
 			var html = template.html(head,body);
 			response.send(html);
@@ -74,27 +82,32 @@ router.get('/id/:episodeId',function(request,response,next){
 		if(err){throw err}
 			var list = template.listEpisode(episodes);
 			var titleEpisode = template.titleEpisode(episode);
-			var head = template.head(`<link rel="stylesheet" href="/css/pageEpisode.css">`);
+			var head = template.head(`
+				<link rel="stylesheet" href="/css/header.css">
+				<link rel="stylesheet" href="/css/pageEpisode.css">
+			`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					${titleEpisode}
-					<p>${episode[0].description}</p>
+					<div class="content">
+						${titleEpisode}
+						<p>${episode[0].description}</p>
+					</div>
+					<div class="ect">
+						<div class="update">
+							<p><a href="/episode/update/${request.params.episodeId}">수정하기</a></p>
+							<form action="/episode/delete_process" method="post">
+								<input type="hidden" name="id" value="${request.params.episodeId}">
+								<input type="submit" value="삭제하기">
+							</form>
+							<p><a href="/episode/create/${episode[0].book_id}">글쓰기</a></p>
+						</div>
+						<div class="indexLink">
+							<p><a href="/episode">목록보기</a></p>
+							<p><a href="/book/id/${episode[0].book_id}">책목차보기</a></p>
+						</div>
+					</div>
 				</main>
-				<footer>
-					<div class="update">
-						<p><a href="/episode/update/${request.params.episodeId}">update</a></p>
-						<form action="/episode/delete_process" method="post">
-							<input type="hidden" name="id" value="${request.params.episodeId}">
-							<input type="submit" value="삭제하기">
-						</form>
-						<p><a href="/episode/create/${episode[0].book_id}">글쓰기</a></p>
-					</div>
-					<div class="indexLink">
-						<p><a href="/episode">목록보기</a></p>
-						<p><a href="/book/id/${episode[0].book_id}">책목차보기</a></p>
-					</div>
-				</footer>
 				`);
 			var html = template.html(head,body);
 			response.send(html);
@@ -103,7 +116,10 @@ router.get('/id/:episodeId',function(request,response,next){
 })
 
 router.get('/create',function(request,response,next){
-	var head = template.head(`<link rel="stylesheet" href="/css/formEpisode.css">`);
+	var head = template.head(`
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/formEpisode.css">
+	`);
 	var body = template.body(`
 		${template.header()}
 		<main>
@@ -123,7 +139,10 @@ router.get('/create',function(request,response,next){
 })
 
 router.get('/create/:bookId',function(request,response,next){
-	var head = template.head(`<link rel="stylesheet" href="/css/formEpisode.css">`);
+	var head = template.head(`
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/formEpisode.css">
+	`);
 	var body = template.body(`
 		${template.header()}
 		<main>
@@ -144,7 +163,10 @@ router.get('/create/:bookId',function(request,response,next){
 
 router.get('/update/:episodeId',function(request,response,next){
 	db.query(`SELECT * FROM episode WHERE id=?`,[request.params.episodeId], function (err, episode) {
-		var head = template.head(`<link rel="stylesheet" href="/css/formEpisode.css">`);
+		var head = template.head(`
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/formEpisode.css">
+		`);
 		var body = template.body(`
 			${template.header()}
 			<main>

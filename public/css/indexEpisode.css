@@ -1,20 +1,20 @@
-.wrap {padding: 10px}
+main {padding: 10px}
 
-main {margin-bottom: 10px; border : 1px solid #333; border-radius : 5px}
-main>div{}
-main>div ul {}
-main>div ul li {border-bottom : 1px solid #ccc}
-main>div ul li a {padding : 10px}
-main>div ul li a:hover {text-decoration : underline}
-main>nav {}
-main>nav{}
-main>nav ol {display : flex}
-main>nav ol li {}
-main>nav ol li a {padding: 10px; color : cornflowerblue}
-main>nav ol li a.checked {color : #333}
-main>nav ol li a:hover {text-decoration : underline}
+main>nav {margin-bottom: 10px; border : 1px solid #333; border-radius : 5px}
+main>nav>.list{}
+main>nav>.list ul {}
+main>nav>.list ul li {border-bottom : 1px solid #ccc}
+main>nav>.list ul li a {padding : 10px}
+main>nav>.list ul li a:hover {text-decoration : underline}
+main>nav>.page {}
+main>nav>.page{}
+main>nav>.page ol {display : flex}
+main>nav>.page ol li {}
+main>nav>.page ol li a {padding: 10px; color : cornflowerblue}
+main>nav>.page ol li a.checked {color : #333}
+main>nav>.page ol li a:hover {text-decoration : underline}
 
-footer {display: flex}
-footer p {}
-footer p  a{margin-right : 10px; padding : 10px; background-color : antiquewhite}
-footer p  a:hover {background-color : brown; color : aliceblue}
+main .create {display: flex}
+main .create p {}
+main .create p  a{margin-right : 10px; padding : 10px; background-color : antiquewhite}
+main .create p  a:hover {background-color : brown; color : aliceblue}

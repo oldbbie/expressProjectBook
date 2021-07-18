@@ -1,25 +1,20 @@
-.wrap {padding: 10px}
-
-haeder {margin-bottom: 20px}
-haeder nav{}
-
-main {margin-bottom: 20px; border: 1px solid #666; border-radius: 5px}
-main h2{margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #aaa; text-indent: 1rem}
-main p{min-height: 20vh; text-indent: 1em}
-
-footer {margin-bottom: 20px}
-footer .update {display: flex}
-footer .update p{}
-footer .update p a{}
-footer .update form{}
-footer .update form input[type='hidden']{}
-footer .update form input[type='submit']{}
-footer .indexLink {display: flex}
-footer .indexLink p {}
-footer .indexLink p a {margin : 10px; width : 200px; height: 50px; background-color: antiquewhite; text-align: center; line-height: 50px}
-footer .indexLink p a:hover {background-color: brown; color: aliceblue}
-footer .episodeList {}
-footer .episodeList ul{}
-footer .episodeList ul li{}
-footer .episodeList ul li a{}
-footer .episodeList ul li a:hover{text-decoration: underline}
+main {padding: 10px}
+main .content {margin-bottom: 20px; border: 1px solid #666; border-radius: 5px}
+main .content h2{margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #aaa; text-indent: 1rem}
+main .content p{min-height: 20vh; text-indent: 1em}
+main .ect {margin-bottom: 20px}
+main .ect .update {display: flex}
+main .ect .update p{}
+main .ect .update p a{}
+main .ect .update form{}
+main .ect .update form input[type='hidden']{}
+main .ect .update form input[type='submit']{}
+main .ect .indexLink {display: flex}
+main .ect .indexLink p {}
+main .ect .indexLink p a {margin : 10px; width : 200px; height: 50px; background-color: antiquewhite; text-align: center; line-height: 50px}
+main .ect .indexLink p a:hover {background-color: brown; color: aliceblue}
+main .ect .episodeList {}
+main .ect .episodeList ul{}
+main .ect .episodeList ul li{}
+main .ect .episodeList ul li a{}
+main .ect .episodeList ul li a:hover{text-decoration: underline}

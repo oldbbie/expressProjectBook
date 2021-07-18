@@ -14,21 +14,25 @@ router.get('/',function(request,response,next){
 			var list = template.listBook(books);
 			var pageNum = Math.ceil(totalCounting[0].coun/pageCounting);
 			var indexLink = template.pageLink(pageNum,showPageRange,nowPage,'/book/index');
-			var head = template.head(`<link rel="stylesheet" href="/css/indexBook.css">`);
+			var head = template.head(`
+				<link rel="stylesheet" href="/css/header.css">
+				<link rel="stylesheet" href="/css/indexBook.css">
+			`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					<div class="list">
-						${list}
-					</div>
 					<nav>
-						${indexLink}
+						<div class="list">
+							${list}
+						</div>
+						<div class="page">
+							${indexLink}
+						</div>
 					</nav>
-				</main>  
-				<footer>
-					<p><a href="/book/create">책쓰기</a></p>
-					<p><a href="/">홈가기</a></p>
-				</footer>
+					<div class="create">
+						<p><a href="/book/create">책쓰기</a></p>
+					</div>
+				<main>
 			`);
 			var html = template.html(head,body);
 			response.send(html);
@@ -46,22 +50,27 @@ router.get('/index/:indexPage',function(request,response,next){
 			var list = template.listBook(books);
 			var pageNum = Math.ceil(totalCounting[0].coun/pageCounting);
 			var indexLink = template.pageLink(pageNum,showPageRange,nowPage,'/book/index');
-			var head = template.head(`<link rel="stylesheet" href="/css/indexBook.css">`);
+			var head = template.head(`
+				<link rel="stylesheet" href="/css/header.css">
+				<link rel="stylesheet" href="/css/indexBook.css">
+			`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					<div class="list">
-					${list}
-					</div>
 					<nav>
-						${indexLink}
+						<div class="list">
+							${list}
+						</div>
+						<div class="page">
+							${indexLink}
+						</div>
 					</nav>
-				</main>  
-				<footer>
-					<p><a href="/book/create">책쓰기</a></p>
-					<p><a href="/">홈가기</a></p>
-				</footer>
+					<div class="create">
+						<p><a href="/book/create">책쓰기</a></p>
+					</div>
+				<main>
 			`);
+			var html = template.html(head,body);
 			var html = template.html(head,body);
 			response.send(html);
 		})
@@ -73,30 +82,35 @@ router.get('/id/:bookId',function(request,response,next){
 		db.query(`SELECT * FROM episode WHERE book_id=?`,[request.params.bookId], function (err2, episodes) {
 		if(err){throw err}
 			var list = template.listEpisode(episodes);
-			var head = template.head(`<link rel="stylesheet" href="/css/pageBook.css">`);
+			var head = template.head(`
+				<link rel="stylesheet" href="/css/header.css">
+				<link rel="stylesheet" href="/css/pageBook.css">
+			`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					<h2>${book[0].title}</h2>
-					<p>${book[0].description}</p>
+					<div class="content">
+						<h2>${book[0].title}</h2>
+						<p>${book[0].description}</p>
+					</div>
+					<div class="ect">
+						<div class="update">
+							<p><a href="/book/update/${request.params.bookId}">책 수정하기</a></p>
+							<form action="/book/delete_process" method="post">
+								<input type="hidden" name="id" value="${request.params.bookId}">
+								<input type="submit" value="책 삭제하기">
+							</form>
+							<p><a href="/episode/create/${request.params.bookId}">글쓰기</a></p>
+						</div>
+						<div class="indexLink">
+							<p><a href="/book">다른 책 보기</a></p>
+							<p><a href="/nickname/id/${book[0].nickname_id}">이 작가가 쓴 책보기</a></p>
+						</div>
+						<div class="episodeList">
+							${list}
+						</div>
+					</div>
 				</main>
-				<footer>
-					<div class="update">
-						<p><a href="/book/update/${request.params.bookId}">책 수정하기</a></p>
-						<form action="/book/delete_process" method="post">
-							<input type="hidden" name="id" value="${request.params.bookId}">
-							<input type="submit" value="책 삭제하기">
-						</form>
-						<p><a href="/episode/create/${request.params.bookId}">글쓰기</a></p>
-					</div>
-					<div class="indexLink">
-						<p><a href="/book">다른 책 보기</a></p>
-						<p><a href="/nickname/id/${book[0].nickname_id}">이 작가가 쓴 책보기</a></p>
-					</div>
-					<div class="episodeList">
-						${list}
-					</div>
-				</footer>
 			`);
 			var html = template.html(head,body);
 			response.send(html);
@@ -105,12 +119,15 @@ router.get('/id/:bookId',function(request,response,next){
 })
 
 router.get('/create',function(request,response,next){
-	var head = template.head(`<link rel="stylesheet" href="/css/formBook.css">`);
+	var head = template.head(`
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/formBook.css">
+	`);
 	var body = template.body(`
 		${template.header()}
 		<main>
 			<form action = "/book/create_process" method="post">
-				<p><input type = "hidden" id="nickname" name="nickname" value="1"></p>
+				<p><input type = "hidden" id="nickname" name="nickname" value="2"></p>
 				<p><input type = "text" id="title" name="title" placeholder="제목"></p>
 				<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
 				<p>
@@ -125,7 +142,10 @@ router.get('/create',function(request,response,next){
 })
 
 router.get('/create/:nicknameId',function(request,response,next){
-	var head = template.head(`<link rel="stylesheet" href="/css/formBook.css">`);
+	var head = template.head(`
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/formBook.css">
+	`);
 	var body = template.body(`
 		${template.header()}
 		<main>
@@ -146,7 +166,10 @@ router.get('/create/:nicknameId',function(request,response,next){
 
 router.get('/update/:bookId',function(request,response,next){
 	db.query(`SELECT * FROM book WHERE id=?`,[request.params.bookId], function (err, book) {
-		var head = template.head(`<link rel="stylesheet" href="/css/formBook.css">`);
+		var head = template.head(`
+			<link rel="stylesheet" href="/css/header.css">
+			<link rel="stylesheet" href="/css/formBook.css">
+		`);
 		var body = template.body(`
 			${template.header()}
 			<main>
@@ -171,7 +194,7 @@ router.post('/create_process',function(request,response,next){
 	var title = post.title;
 	var description = post.description;
 	var nickname = post.nickname;
-	db.query(`INSERT INTO book (title, description,created,nickname_id) VALUE (?,?,NOW(),?)`,[title,description,nickname],function(err,result){
+	db.query(`INSERT INTO book (title, description, img,created,nickname_id) VALUE (?,?,'nosign.jpg',NOW(),?)`,[title,description,nickname],function(err,result){
 		response.redirect( `/book/id/${result.insertId}`);
 	})
 })

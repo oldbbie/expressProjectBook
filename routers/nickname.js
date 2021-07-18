@@ -14,21 +14,25 @@ router.get('/',function(request,response,next){
 			var list = template.listNickname(nicknames);
 			var pageNum = Math.ceil(totalCounting[0].coun/pageCounting);
 			var indexLink = template.pageLink(pageNum,showPageRange,nowPage,'/nickname/index');
-			var head = template.head(`<link rel="stylesheet" href="/css/indexNickname.css">`);
+			var head = template.head(`
+				<link rel="stylesheet" href="/css/header.css">
+				<link rel="stylesheet" href="/css/indexNickname.css">
+			`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					<div class="list">
-						${list}
-					</div>
 					<nav>
-						${indexLink}
+						<div class="list">
+							${list}
+						</div>
+						<div class="page">
+							${indexLink}
+						</div>
 					</nav>
-				</main> 
-				<footer>
-					<p><a href="/nickname/create">작가페이지만들기</a></p>
-					<p><a href="/">홈가기</a></p>
-				</footer>
+					<div class="create">
+						<p><a href="/nickname/create">새서재만들기</a></p>
+					</div>
+				<main>
 			`);
 			var html = template.html(head,body);
 			response.send(html);
@@ -46,21 +50,25 @@ router.get('/index/:indexPage',function(request,response,next){
 			var list = template.listNickname(nicknames);
 			var pageNum = Math.ceil(totalCounting[0].coun/pageCounting);
 			var indexLink = template.pageLink(pageNum,showPageRange,nowPage,'/nickname/index');
-			var head = template.head(`<link rel="stylesheet" href="/css/indexNickname.css">`);
+			var head = template.head(`
+				<link rel="stylesheet" href="/css/header.css">
+				<link rel="stylesheet" href="/css/indexNickname.css">
+			`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					<div class="list">
-						${list}
-					</div>
 					<nav>
-						${indexLink}
+						<div class="list">
+							${list}
+						</div>
+						<div class="page">
+							${indexLink}
+						</div>
 					</nav>
-				</main> 
-				<footer>
-					<p><a href="/nickname/create">작가페이지만들기</a></p>
-					<p><a href="/">홈가기</a></p>
-				</footer>
+					<div class="create">
+						<p><a href="/nickname/create">새서재만들기</a></p>
+					</div>
+				<main>
 			`);
 			var html = template.html(head,body);
 			response.send(html);
@@ -73,29 +81,34 @@ router.get('/id/:nicknameId',function(request,response,next){
 		db.query(`SELECT * FROM book WHERE nickname_id=?`,[request.params.nicknameId], function (err2, books) {
 		if(err){throw err}
 			var list = template.listBook(books);
-			var head = template.head(`<link rel="stylesheet" href="/css/pageNickname.css">`);
+			var head = template.head(`
+				<link rel="stylesheet" href="/css/header.css">
+				<link rel="stylesheet" href="/css/pageNickname.css">
+			`);
 			var body = template.body(`
 				${template.header()}
 				<main>
-					<h2>${nickname[0].nickname}</h2>
-					<p>${nickname[0].pr}</p>
+					<div class="content">
+						<h2>${nickname[0].nickname}</h2>
+						<p>${nickname[0].pr}</p>
+					</div>
+					<div class="ect">
+						<div class="update">
+							<p><a href="/nickname/update/${request.params.nicknameId}">작가 페이지 관리하기</a></p>
+							<form action="/nickname/delete_process" method="post">
+								<input type="hidden" name="id" value="${request.params.nicknameId}">
+								<input type="submit" value="작가 탈퇴하기">
+							</form>
+							<p><a href="/book/create/${request.params.nicknameId}">책쓰기</a></p>
+						</div>
+						<div class="indexLink">
+						<p><a href="/nickname">다른 작가 보기</a></p>
+						</div>
+						<div class="bookList">
+							${list}
+						</div>
+					</div>
 				</main>
-				<footer>
-					<div class="update">
-						<p><a href="/nickname/update/${request.params.nicknameId}">작가 페이지 관리하기</a></p>
-						<form action="/nickname/delete_process" method="post">
-							<input type="hidden" name="id" value="${request.params.nicknameId}">
-							<input type="submit" value="작가 탈퇴하기">
-						</form>
-						<p><a href="/book/create/${request.params.nicknameId}">책쓰기</a></p>
-					</div>
-					<div class="indexLink">
-					<p><a href="/nickname">다른 작가 보기</a></p>
-					</div>
-					<div class="bookList">
-						${list}
-					</div>
-				</footer>
 			`);
 			var html = template.html(head,body);
 			response.send(html);
@@ -104,7 +117,10 @@ router.get('/id/:nicknameId',function(request,response,next){
 })
 
 router.get('/create',function(request,response,next){
-	var head = template.head(`<link rel="stylesheet" href="/css/formNickname.css">`);
+	var head = template.head(`
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/formNickname.css">
+	`);
 	var body = template.body(`
 		${template.header()}
 		<main>
@@ -125,7 +141,10 @@ router.get('/create',function(request,response,next){
 
 router.get('/update/:nicknameId',function(request,response,next){
 	db.query(`SELECT * FROM nickname WHERE id=?`,[request.params.nicknameId], function (err, nickname) {
-		var head = template.head(`<link rel="stylesheet" href="/css/formNickname.css">`);
+		var head = template.head(`
+			<link rel="stylesheet" href="/css/header.css">
+			<link rel="stylesheet" href="/css/formNickname.css">
+		`);
 		var body = template.body(`
 			${template.header()}
 			<main>
