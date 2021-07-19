@@ -3,6 +3,7 @@ var router = express.Router();
 
 var template = require('../lib/template');
 var db = require('../lib/db.js');
+var auth = require('../lib/auth.js');
 
 router.get('/',function(request,response,next){
 	db.query(`SELECT * FROM book ORDER BY id DESC LIMIT 3`, function (err, books) {
@@ -14,7 +15,7 @@ router.get('/',function(request,response,next){
 			<link rel="stylesheet" href="/css/index.css">
 		`);
 		var body = template.body(`
-			${template.header()}
+			${template.header(auth.statusUI(request,response))}
 			<main>
 				<nav class="category">
 					<dl id="story_mark_frame">

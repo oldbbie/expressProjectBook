@@ -14,6 +14,7 @@ main .ect .indexLink p {}
 main .ect .indexLink p a {margin : 10px; width : 200px; height: 50px; background-color: antiquewhite; text-align: center; line-height: 50px}
 main .ect .indexLink p a:hover {background-color: brown; color: aliceblue}
 main .ect .episodeList {}
+main .ect .episodeList h3{}
 main .ect .episodeList ul{}
 main .ect .episodeList ul li{}
 main .ect .episodeList ul li a{}

@@ -4,10 +4,12 @@
 .wrap main form{display: flex; flex-direction: column; justify-content: space-between; padding:48px 40px 36px; width: 440px; height:500px; border: 1px solid #999}
 .wrap main form h2{}
 .wrap main form .input{}
-.wrap main form .input input{padding:13px 15px; width: 100%; margin:1px 1px 0; height:80px; box-sizing: border-box;}
-.wrap main form .input input:focus{border:10px solid #7DA4FF}
-.wrap main form .input input[type='text']{}
-.wrap main form .input input[type='password']{}
+.wrap main form .input p{}
+.wrap main form .input p input{padding:13px 15px; width: 100%; margin:1px 1px 0; height:80px; box-sizing: border-box;}
+.wrap main form .input p input:focus{border:10px solid #7DA4FF}
+.wrap main form .input p input[type='text']{}
+.wrap main form .input p input[type='password']{}
+.wrap main form .input .notLogin{color: crimson; text-indent: 1em}
 .wrap main form .button{display: flex; justify-content: space-between}
 .wrap main form .button a{}
 .wrap main form .button button{padding:10px; width:30%; border:0 solid; background-color: #448CCA; color:#fff; text-align: center}

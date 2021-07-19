@@ -3,6 +3,7 @@ var router = express.Router();
 
 var template = require('../lib/template');
 var db = require('../lib/db.js');
+var auth = require('../lib/auth.js');
 
 router.get('/',function(request,response,next){
 	var pageCounting = 3;
@@ -19,7 +20,7 @@ router.get('/',function(request,response,next){
 				<link rel="stylesheet" href="/css/indexBook.css">
 			`);
 			var body = template.body(`
-				${template.header()}
+				${template.header(auth.statusUI(request,response))}
 				<main>
 					<nav>
 						<div class="list">
@@ -55,7 +56,7 @@ router.get('/index/:indexPage',function(request,response,next){
 				<link rel="stylesheet" href="/css/indexBook.css">
 			`);
 			var body = template.body(`
-				${template.header()}
+				${template.header(auth.statusUI(request,response))}
 				<main>
 					<nav>
 						<div class="list">
@@ -87,7 +88,7 @@ router.get('/id/:bookId',function(request,response,next){
 				<link rel="stylesheet" href="/css/pageBook.css">
 			`);
 			var body = template.body(`
-				${template.header()}
+				${template.header(auth.statusUI(request,response))}
 				<main>
 					<div class="content">
 						<h2>${book[0].title}</h2>
@@ -107,6 +108,7 @@ router.get('/id/:bookId',function(request,response,next){
 							<p><a href="/nickname/id/${book[0].nickname_id}">이 작가가 쓴 책보기</a></p>
 						</div>
 						<div class="episodeList">
+							<h3>에피소드 리스트</h3>
 							${list}
 						</div>
 					</div>
@@ -124,7 +126,7 @@ router.get('/create',function(request,response,next){
 		<link rel="stylesheet" href="/css/formBook.css">
 	`);
 	var body = template.body(`
-		${template.header()}
+		${template.header(auth.statusUI(request,response))}
 		<main>
 			<form action = "/book/create_process" method="post">
 				<p><input type = "hidden" id="nickname" name="nickname" value="2"></p>
@@ -147,7 +149,7 @@ router.get('/create/:nicknameId',function(request,response,next){
 		<link rel="stylesheet" href="/css/formBook.css">
 	`);
 	var body = template.body(`
-		${template.header()}
+		${template.header(auth.statusUI(request,response))}
 		<main>
 			<form action = "/book/create_process" method="post">
 				<p><input type = "hidden" id="nickname" name="nickname" value="${request.params.nicknameId}"></p>
@@ -171,7 +173,7 @@ router.get('/update/:bookId',function(request,response,next){
 			<link rel="stylesheet" href="/css/formBook.css">
 		`);
 		var body = template.body(`
-			${template.header()}
+			${template.header(auth.statusUI(request,response))}
 			<main>
 				<form action = "/book/update_process" method="post">
 					<p><input type = "hidden" id="id" name="id" value="${book[0].id}"></p>

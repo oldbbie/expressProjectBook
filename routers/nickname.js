@@ -3,6 +3,7 @@ var router = express.Router();
 
 var template = require('../lib/template');
 var db = require('../lib/db.js');
+var auth = require('../lib/auth.js');
 
 router.get('/',function(request,response,next){
 	var pageCounting = 3;
@@ -19,7 +20,7 @@ router.get('/',function(request,response,next){
 				<link rel="stylesheet" href="/css/indexNickname.css">
 			`);
 			var body = template.body(`
-				${template.header()}
+				${template.header(auth.statusUI(request,response))}
 				<main>
 					<nav>
 						<div class="list">
@@ -55,7 +56,7 @@ router.get('/index/:indexPage',function(request,response,next){
 				<link rel="stylesheet" href="/css/indexNickname.css">
 			`);
 			var body = template.body(`
-				${template.header()}
+				${template.header(auth.statusUI(request,response))}
 				<main>
 					<nav>
 						<div class="list">
@@ -86,7 +87,7 @@ router.get('/id/:nicknameId',function(request,response,next){
 				<link rel="stylesheet" href="/css/pageNickname.css">
 			`);
 			var body = template.body(`
-				${template.header()}
+				${template.header(auth.statusUI(request,response))}
 				<main>
 					<div class="content">
 						<h2>${nickname[0].nickname}</h2>
@@ -105,6 +106,7 @@ router.get('/id/:nicknameId',function(request,response,next){
 						<p><a href="/nickname">다른 작가 보기</a></p>
 						</div>
 						<div class="bookList">
+							<h3>책 리스트</h3>
 							${list}
 						</div>
 					</div>
@@ -122,7 +124,7 @@ router.get('/create',function(request,response,next){
 		<link rel="stylesheet" href="/css/formNickname.css">
 	`);
 	var body = template.body(`
-		${template.header()}
+		${template.header(auth.statusUI(request,response))}
 		<main>
 			<form action = "/nickname/create_process" method="post">
 				<p><input type = "hidden" id="account" name="account" value="1"></p>
@@ -146,7 +148,7 @@ router.get('/update/:nicknameId',function(request,response,next){
 			<link rel="stylesheet" href="/css/formNickname.css">
 		`);
 		var body = template.body(`
-			${template.header()}
+			${template.header(auth.statusUI(request,response))}
 			<main>
 				<form action = "/nickname/update_process" method="post">
 					<p><input type = "hidden" id="id" name="id" value="${nickname[0].id}"></p>
