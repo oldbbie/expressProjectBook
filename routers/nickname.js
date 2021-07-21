@@ -119,6 +119,10 @@ router.get('/id/:nicknameId',function(request,response,next){
 })
 
 router.get('/create',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var head = template.head(`
 		<link rel="stylesheet" href="/css/header.css">
 		<link rel="stylesheet" href="/css/formNickname.css">
@@ -142,6 +146,10 @@ router.get('/create',function(request,response,next){
 })
 
 router.get('/update/:nicknameId',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	db.query(`SELECT * FROM nickname WHERE id=?`,[request.params.nicknameId], function (err, nickname) {
 		var head = template.head(`
 			<link rel="stylesheet" href="/css/header.css">
@@ -168,6 +176,10 @@ router.get('/update/:nicknameId',function(request,response,next){
 
 
 router.post('/create_process',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var post = request.body;
 	var nickname = post.nickname;
 	var pr = post.pr;
@@ -178,6 +190,10 @@ router.post('/create_process',function(request,response,next){
 })
 
 router.post('/update_process',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var post = request.body;
 	var nickname = post.nickname;
 	var pr = post.pr;
@@ -196,6 +212,10 @@ router.post('/update_process',function(request,response,next){
 
 
 router.post('/delete_process',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var post = request.body;
 	var id = post.id;
 	db.query(`DELETE e  FROM episode as e JOIN book as b ON e.book_id = b.id WHERE b.nickname_id = ?`,[id],function(err,result){

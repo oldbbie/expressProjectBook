@@ -117,6 +117,10 @@ router.get('/id/:episodeId',function(request,response,next){
 })
 
 router.get('/create',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var head = template.head(`
 		<link rel="stylesheet" href="/css/header.css">
 		<link rel="stylesheet" href="/css/formEpisode.css">
@@ -140,6 +144,10 @@ router.get('/create',function(request,response,next){
 })
 
 router.get('/create/:bookId',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var head = template.head(`
 		<link rel="stylesheet" href="/css/header.css">
 		<link rel="stylesheet" href="/css/formEpisode.css">
@@ -163,6 +171,10 @@ router.get('/create/:bookId',function(request,response,next){
 })
 
 router.get('/update/:episodeId',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	db.query(`SELECT * FROM episode WHERE id=?`,[request.params.episodeId], function (err, episode) {
 		var head = template.head(`
 		<link rel="stylesheet" href="/css/header.css">
@@ -188,6 +200,10 @@ router.get('/update/:episodeId',function(request,response,next){
 })
 
 router.post('/create_process',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var post = request.body;
 	var title = post.title;
 	var description = post.description;
@@ -198,6 +214,10 @@ router.post('/create_process',function(request,response,next){
 })
 
 router.post('/update_process',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var post = request.body;
 	var title = post.title;
 	var description = post.description;
@@ -216,6 +236,10 @@ router.post('/update_process',function(request,response,next){
 
 
 router.post('/delete_process',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var post = request.body;
 	var id = post.id;
 	db.query(`

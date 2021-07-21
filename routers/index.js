@@ -6,6 +6,7 @@ var db = require('../lib/db.js');
 var auth = require('../lib/auth.js');
 
 router.get('/',function(request,response,next){
+	// 작품이 하나도 없을때
 	db.query(`SELECT * FROM book ORDER BY id DESC LIMIT 3`, function (err, books) {
 		var hotBooks = template.hotBooks('인기소설',books);
 		var tasteBooks = template.hotBooks('취향저격 소설',books);

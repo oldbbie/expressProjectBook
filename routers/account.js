@@ -55,6 +55,7 @@ router.get('/login',function(request,response,next){
 })
 
 router.get('/join',function(request,response,next){
+	// 1. 띄어쓰기 금지 2. 중복확인기능
 	var head = template.head(`<link rel="stylesheet" href="/css/join.css">`);
 	var body = template.body(`
 		<main>

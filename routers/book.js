@@ -121,6 +121,10 @@ router.get('/id/:bookId',function(request,response,next){
 })
 
 router.get('/create',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var head = template.head(`
 		<link rel="stylesheet" href="/css/header.css">
 		<link rel="stylesheet" href="/css/formBook.css">
@@ -144,6 +148,10 @@ router.get('/create',function(request,response,next){
 })
 
 router.get('/create/:nicknameId',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var head = template.head(`
 		<link rel="stylesheet" href="/css/header.css">
 		<link rel="stylesheet" href="/css/formBook.css">
@@ -167,6 +175,10 @@ router.get('/create/:nicknameId',function(request,response,next){
 })
 
 router.get('/update/:bookId',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	db.query(`SELECT * FROM book WHERE id=?`,[request.params.bookId], function (err, book) {
 		var head = template.head(`
 			<link rel="stylesheet" href="/css/header.css">
@@ -192,6 +204,10 @@ router.get('/update/:bookId',function(request,response,next){
 })
 
 router.post('/create_process',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var post = request.body;
 	var title = post.title;
 	var description = post.description;
@@ -202,6 +218,10 @@ router.post('/create_process',function(request,response,next){
 })
 
 router.post('/update_process',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var post = request.body;
 	var title = post.title;
 	var description = post.description;
@@ -220,6 +240,10 @@ router.post('/update_process',function(request,response,next){
 
 
 router.post('/delete_process',function(request,response,next){
+	if(!auth.isOwner(request,response)){
+		response.redirect( `/`);
+		return false;
+	}
 	var post = request.body;
 	var id = post.id;
 	db.query(`DELETE  FROM episode WHERE book_id = ?`,[id],function(err,result){
