@@ -20,7 +20,7 @@ router.get('/',function(request,response,next){
 				<link rel="stylesheet" href="/css/indexBook.css">
 			`);
 			var body = template.body(`
-				${template.header(auth.statusUI(request,response))}
+				${template.header(auth.statusUI(request,response),2)}
 				<main>
 					<nav>
 						<div class="list">
@@ -56,7 +56,7 @@ router.get('/index/:indexPage',function(request,response,next){
 				<link rel="stylesheet" href="/css/indexBook.css">
 			`);
 			var body = template.body(`
-				${template.header(auth.statusUI(request,response))}
+				${template.header(auth.statusUI(request,response),2)}
 				<main>
 					<nav>
 						<div class="list">
@@ -88,7 +88,7 @@ router.get('/id/:bookId',function(request,response,next){
 				<link rel="stylesheet" href="/css/pageBook.css">
 			`);
 			var body = template.body(`
-				${template.header(auth.statusUI(request,response))}
+				${template.header(auth.statusUI(request,response),2)}
 				<main>
 					<div class="content">
 						<h2>${book[0].title}</h2>
@@ -130,7 +130,7 @@ router.get('/create',function(request,response,next){
 		<link rel="stylesheet" href="/css/formBook.css">
 	`);
 	var body = template.body(`
-		${template.header(auth.statusUI(request,response))}
+		${template.header(auth.statusUI(request,response),2)}
 		<main>
 			<form action = "/book/create_process" method="post">
 				<p><input type = "hidden" id="nickname" name="nickname" value="2"></p>
@@ -157,7 +157,7 @@ router.get('/create/:nicknameId',function(request,response,next){
 		<link rel="stylesheet" href="/css/formBook.css">
 	`);
 	var body = template.body(`
-		${template.header(auth.statusUI(request,response))}
+		${template.header(auth.statusUI(request,response),2)}
 		<main>
 			<form action = "/book/create_process" method="post">
 				<p><input type = "hidden" id="nickname" name="nickname" value="${request.params.nicknameId}"></p>
@@ -185,7 +185,7 @@ router.get('/update/:bookId',function(request,response,next){
 			<link rel="stylesheet" href="/css/formBook.css">
 		`);
 		var body = template.body(`
-			${template.header(auth.statusUI(request,response))}
+			${template.header(auth.statusUI(request,response),2)}
 			<main>
 				<form action = "/book/update_process" method="post">
 					<p><input type = "hidden" id="id" name="id" value="${book[0].id}"></p>

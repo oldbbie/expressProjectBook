@@ -1,19 +1,21 @@
-.wrap{position:relative; flex-direction: column; width:100%; height: 100%}
+.wrap {position:relative; flex-direction: column; width:100%; height: 100%}
 
-.wrap header{position:fixed; display: flex; top:0; left: 0; z-index: 9999;  align-items: center; justify-content: space-between; margin-bottom:20px;width:100%; height: 56px; background-color: #7DA4FF}
-.wrap header>.left{display: flex; flex:1; align-items: center}
-.wrap header>.left .hamenu{padding: 5px; margin: 0 20px}
+.wrap header {position:fixed; display: flex; top:0; left: 0; z-index: 9999;  align-items: center; justify-content: space-between; margin-bottom:20px;width:100%; height: 56px; background-color: #7DA4FF}
+.wrap header>.left {display: flex; flex:1; align-items: center}
+.wrap header>.left .hamenu {padding: 5px; margin: 0 20px}
 .wrap header>.left h1{}
-.wrap header>.left h1>a{color: #fff; font-weight: 100}
-.wrap header>.left h1>a:hover{color: #000}
-.wrap header>.left nav{display: flex}
-.wrap header>.left nav p{margin: 0 5px}
-.wrap header>.left nav p>a:hover{color: #fff}
-.wrap header>.middle{}
-.wrap header>.middle input[type="text"]{width: 500px; height: 30px; text-indent:  9px}
-.wrap header>.middle button{width: 100px; height: 34px; }
-.wrap header>.right{display: flex; flex:1; justify-content: flex-end}
-.wrap header>.right>a{padding: 5px; margin-right: 20px; color:#fff}
-.wrap header>.right>a:hover{color:#000}
+.wrap header>.left h1>a {color: #fff; font-weight: 100}
+.wrap header>.left h1>a:hover {color: #000}
+.wrap header>.left nav {display: flex}
+.wrap header>.left nav p {margin: 0 5px}
+.wrap header>.left nav p a {}
+.wrap header>.left nav p>a.selected {color: #fff}
+.wrap header>.left nav p>a:hover {color: #fff}
+.wrap header>.middle {}
+.wrap header>.middle input[type="text"] {width: 500px; height: 30px; text-indent:  9px}
+.wrap header>.middle button {width: 100px; height: 34px; }
+.wrap header>.right {display: flex; flex:1; justify-content: flex-end}
+.wrap header>.right>a {padding: 5px; margin-right: 20px; color:#fff}
+.wrap header>.right>a:hover {color:#000}
 
-.wrap main{margin-top:56px}
+.wrap main {margin-top:56px}

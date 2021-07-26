@@ -20,7 +20,7 @@ router.get('/',function(request,response,next){
 				<link rel="stylesheet" href="/css/indexNickname.css">
 			`);
 			var body = template.body(`
-				${template.header(auth.statusUI(request,response))}
+				${template.header(auth.statusUI(request,response),3)}
 				<main>
 					<nav>
 						<div class="list">
@@ -56,7 +56,7 @@ router.get('/index/:indexPage',function(request,response,next){
 				<link rel="stylesheet" href="/css/indexNickname.css">
 			`);
 			var body = template.body(`
-				${template.header(auth.statusUI(request,response))}
+				${template.header(auth.statusUI(request,response),3)}
 				<main>
 					<nav>
 						<div class="list">
@@ -87,7 +87,7 @@ router.get('/id/:nicknameId',function(request,response,next){
 				<link rel="stylesheet" href="/css/pageNickname.css">
 			`);
 			var body = template.body(`
-				${template.header(auth.statusUI(request,response))}
+				${template.header(auth.statusUI(request,response),3)}
 				<main>
 					<div class="content">
 						<h2>${nickname[0].nickname}</h2>
@@ -128,7 +128,7 @@ router.get('/create',function(request,response,next){
 		<link rel="stylesheet" href="/css/formNickname.css">
 	`);
 	var body = template.body(`
-		${template.header(auth.statusUI(request,response))}
+		${template.header(auth.statusUI(request,response),3)}
 		<main>
 			<form action = "/nickname/create_process" method="post">
 				<p><input type = "hidden" id="account" name="account" value="1"></p>
@@ -156,7 +156,7 @@ router.get('/update/:nicknameId',function(request,response,next){
 			<link rel="stylesheet" href="/css/formNickname.css">
 		`);
 		var body = template.body(`
-			${template.header(auth.statusUI(request,response))}
+			${template.header(auth.statusUI(request,response),3)}
 			<main>
 				<form action = "/nickname/update_process" method="post">
 					<p><input type = "hidden" id="id" name="id" value="${nickname[0].id}"></p>
