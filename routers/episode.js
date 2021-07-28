@@ -121,26 +121,29 @@ router.get('/create',function(request,response,next){
 		response.redirect( `/`);
 		return false;
 	}
-	var head = template.head(`
-		<link rel="stylesheet" href="/css/header.css">
-		<link rel="stylesheet" href="/css/formEpisode.css">
-	`);
-	var body = template.body(`
-		${template.header(auth.statusUI(request,response),1)}
-		<main>
-			<form action = "/episode/create_process" method="post">
-				<p><input type = "hidden" id="book" name="book" value="5"></p>
-				<p><input type = "text" id="title" name="title" placeholder="제목"></p>
-				<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
-				<p>
-					<input type = "submit" value = "작성완료">
-					<a href="/episode/">작성취소</a>
-				</p>
-			</from>
-		</main>
+	db.query(`SELECT * FROM book WHERE nickname_id=?`,[request.session.nickname_id], function (err, books) {
+		var selectBook = template.selectBook(books,books[0].id);
+		var head = template.head(`
+			<link rel="stylesheet" href="/css/header.css">
+			<link rel="stylesheet" href="/css/formEpisode.css">
 		`);
-	var html = template.html(head,body);
-	response.send(html);
+		var body = template.body(`
+			${template.header(auth.statusUI(request,response),1)}
+			<main>
+				<form action = "/episode/create_process" method="post">
+					<p>${selectBook}</p>
+					<p><input type = "text" id="title" name="title" placeholder="제목"></p>
+					<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
+					<p>
+						<input type = "submit" value = "작성완료">
+						<a href="/episode/">작성취소</a>
+					</p>
+				</from>
+			</main>
+			`);
+		var html = template.html(head,body);
+		response.send(html);
+	})
 })
 
 router.get('/create/:bookId',function(request,response,next){
@@ -148,26 +151,29 @@ router.get('/create/:bookId',function(request,response,next){
 		response.redirect( `/`);
 		return false;
 	}
-	var head = template.head(`
-		<link rel="stylesheet" href="/css/header.css">
-		<link rel="stylesheet" href="/css/formEpisode.css">
-	`);
-	var body = template.body(`
-		${template.header(auth.statusUI(request,response),1)}
-		<main>
-			<form action = "/episode/create_process" method="post">
-				<p><input type = "hidden" id="book" name="book" value="${request.params.bookId}"></p>
-				<p><input type = "text" id="title" name="title" placeholder="제목"></p>
-				<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
-				<p>
-					<input type = "submit" value = "작성완료">
-					<a href="/episode/">작성취소</a>
-				</p>
-			</from>
-		</main>
+	db.query(`SELECT * FROM book WHERE nickname_id=?`,[request.session.nickname_id], function (err, books) {
+		var selectBook = template.selectBook(books,request.params.bookId);
+		var head = template.head(`
+			<link rel="stylesheet" href="/css/header.css">
+			<link rel="stylesheet" href="/css/formEpisode.css">
 		`);
-	var html = template.html(head,body);
-	response.send(html);
+		var body = template.body(`
+			${template.header(auth.statusUI(request,response),1)}
+			<main>
+				<form action = "/episode/create_process" method="post">
+					<p>${selectBook}</p>
+					<p><input type = "text" id="title" name="title" placeholder="제목"></p>
+					<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
+					<p>
+						<input type = "submit" value = "작성완료">
+						<a href="/episode/">작성취소</a>
+					</p>
+				</from>
+			</main>
+			`);
+		var html = template.html(head,body);
+		response.send(html);
+	})
 })
 
 router.get('/update/:episodeId',function(request,response,next){
