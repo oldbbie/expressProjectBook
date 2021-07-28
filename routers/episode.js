@@ -118,7 +118,11 @@ router.get('/id/:episodeId',function(request,response,next){
 
 router.get('/create',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	db.query(`SELECT * FROM book WHERE nickname_id=?`,[request.session.nickname_id], function (err, books) {
@@ -148,7 +152,11 @@ router.get('/create',function(request,response,next){
 
 router.get('/create/:bookId',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	db.query(`SELECT * FROM book WHERE nickname_id=?`,[request.session.nickname_id], function (err, books) {
@@ -178,7 +186,11 @@ router.get('/create/:bookId',function(request,response,next){
 
 router.get('/update/:episodeId',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	db.query(`SELECT * FROM episode WHERE id=?`,[request.params.episodeId], function (err, episode) {
@@ -207,7 +219,11 @@ router.get('/update/:episodeId',function(request,response,next){
 
 router.post('/create_process',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	var post = request.body;
@@ -221,7 +237,11 @@ router.post('/create_process',function(request,response,next){
 
 router.post('/update_process',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	var post = request.body;
@@ -243,7 +263,11 @@ router.post('/update_process',function(request,response,next){
 
 router.post('/delete_process',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	var post = request.body;

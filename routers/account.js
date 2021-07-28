@@ -87,13 +87,6 @@ router.get('/overlap',function(request,response,next){
 	response.send(html);
 })
 
-router.get('/join',function(request,response,next){
-	var head = template.head('');
-	var body = template.body('<p>준비중</p>');
-	var html = template.html(head,body);
-	response.send(html);
-})
-
 router.get('/update/',function(request,response,next){
 	var head = template.head('');
 	var body = template.body('<p>준비중</p>');
@@ -115,6 +108,7 @@ router.post('/login_process',function(request,response){
 		if(user.length != 0){
 			db.query(`SELECT * FROM nickname WHERE account_id=? `,[user[0].id], function (err, nickname) {
 				request.session.is_logined = true;
+				request.session.acccount_id = user[0].id;
 				if(nickname.length != 0){
 					request.session.nickname_id = nickname[0].id;
 				}
@@ -132,7 +126,9 @@ router.post('/join_process',function(request,response,next){
 	var user_id = post.user_id;
 	var user_pw = post.user_pw;
 	db.query(`INSERT INTO account (userId, userPw,created) VALUE (?,?,NOW())`,[user_id,user_pw],function(err,result){
-		response.redirect( `/account/`);
+		request.session.is_logined = true;
+		request.session.acccount_id = result.insertId;
+		request.session.save(function(){response.redirect(`/`);})
 	})
 })
 

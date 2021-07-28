@@ -122,7 +122,11 @@ router.get('/id/:bookId',function(request,response,next){
 
 router.get('/create',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	var head = template.head(`
@@ -133,7 +137,7 @@ router.get('/create',function(request,response,next){
 		${template.header(auth.statusUI(request,response),2)}
 		<main>
 			<form action = "/book/create_process" method="post">
-				<p><input type = "hidden" id="nickname" name="nickname" value="2"></p>
+				<p><input type = "hidden" id="nickname" name="nickname" value="${request.session.nickname_id}"></p>
 				<p><input type = "text" id="title" name="title" placeholder="제목"></p>
 				<p><textarea id="description" name="description" placeholder="내용"></textarea></p>
 				<p>
@@ -149,7 +153,11 @@ router.get('/create',function(request,response,next){
 
 router.get('/create/:nicknameId',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	var head = template.head(`
@@ -176,7 +184,11 @@ router.get('/create/:nicknameId',function(request,response,next){
 
 router.get('/update/:bookId',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	db.query(`SELECT * FROM book WHERE id=?`,[request.params.bookId], function (err, book) {
@@ -205,7 +217,11 @@ router.get('/update/:bookId',function(request,response,next){
 
 router.post('/create_process',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	var post = request.body;
@@ -219,7 +235,11 @@ router.post('/create_process',function(request,response,next){
 
 router.post('/update_process',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	var post = request.body;
@@ -241,7 +261,11 @@ router.post('/update_process',function(request,response,next){
 
 router.post('/delete_process',function(request,response,next){
 	if(!auth.isOwner(request,response)){
-		response.redirect( `/`);
+		response.redirect(`/`);
+		return false;
+	}
+	if(!auth.isNickname(request,response)){
+		response.redirect(`/`);
 		return false;
 	}
 	var post = request.body;

@@ -131,9 +131,9 @@ router.get('/create',function(request,response,next){
 		${template.header(auth.statusUI(request,response),3)}
 		<main>
 			<form action = "/nickname/create_process" method="post">
-				<p><input type = "hidden" id="account" name="account" value="1"></p>
-				<p><input type = "text" id="nickname" name="nickname" placeholder="닉네임"></p>
-				<p><textarea id="description" name="pr" placeholder="pr"></textarea></p>
+				<p><input type = "hidden" id="account" name="account" value="${request.session.acccount_id}"></p>
+				<p><input type = "text" id="nickname" name="nickname" placeholder="닉네임을 입력해주세요."></p>
+				<p><textarea id="description" name="pr" placeholder="자기소개를 입력해주세요."></textarea></p>
 				<p>
 					<input type = "submit" value = "작성완료">
 					<a href="/nickname/">작성취소</a>
