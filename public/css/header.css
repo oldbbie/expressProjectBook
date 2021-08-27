@@ -17,5 +17,6 @@
 .wrap header>.right {display: flex; flex:1; justify-content: flex-end}
 .wrap header>.right>a {padding: 5px; margin-right: 20px; color:#fff}
 .wrap header>.right>a:hover {color:#000}
+.wrap header>.right .my {position:absolute; display: block; padding:20px; border:1px solid #222; 	background-color: #fff; }
 
 .wrap main {margin-top:56px}
