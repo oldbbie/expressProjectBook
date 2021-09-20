@@ -14,6 +14,7 @@ router.get('/',function(request,response,next){
 		var head = template.head(`
 			<link rel="stylesheet" href="/css/header.css">
 			<link rel="stylesheet" href="/css/index.css">
+			<script src="/js/header.js"></script>
 		`);
 		var body = template.body(`
 			${template.header(auth.statusUI(request,response))}

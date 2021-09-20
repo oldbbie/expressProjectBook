@@ -21,6 +21,7 @@ app.use(session({
 }));
 
 app.use('/css',express.static('public/css'));
+app.use('/js',express.static('public/js'));
 app.use('/img',express.static('public/img'));
 
 //app.get('*',function(request,response,next){

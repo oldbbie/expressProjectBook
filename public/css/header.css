@@ -15,8 +15,16 @@
 .wrap header>.middle input[type="text"] {width: 500px; height: 30px; text-indent:  9px}
 .wrap header>.middle button {width: 100px; height: 34px; }
 .wrap header>.right {display: flex; flex:1; justify-content: flex-end}
-.wrap header>.right>a {padding: 5px; margin-right: 20px; color:#fff}
+.wrap header>.right>a {margin-right: 20px; padding: 5px; color:#fff}
 .wrap header>.right>a:hover {color:#000}
-.wrap header>.right .my {position:absolute; display: block; padding:20px; border:1px solid #222; 	background-color: #fff; }
+.wrap header>.right button.myBtn{margin-right: 20px; border-radius: 100%; width: 40px; height: 40px; border: 0; color:#fff}
+.wrap header>.right .my {position:absolute; display: none; width:100vw; height:100vh;}
+.wrap header>.right .my .myMenu{position:absolute; top: 44px; right:25px; padding:20px; border:1px solid #222; background-color: #fff}
+.wrap header>.right .my .myMenu>a{}
+.wrap header>.right .my .myMenu button{}
+.wrap header>.right .my .otherNickname{display: none; position:absolute; top: 44px; right:25px; padding:20px; border:1px solid #222; background-color: #fff}
+.wrap header>.right .my .otherNickname button{}
+.wrap header>.right .my .otherNickname ul{}
+.wrap header>.right .my .otherNickname ul li{}
 
 .wrap main {margin-top:56px}
